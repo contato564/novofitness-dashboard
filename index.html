@@ -1310,8 +1310,9 @@ function verificarSessao() {
         S.aluno = s.nome || s.email.split('@')[0];
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('aguardando-screen').style.display = 'none';
-        document.getElementById('onboarding').style.display = localStorage.getItem('nf-aluno') ? 'none' : 'flex';
-        if (localStorage.getItem('nf-aluno')) {
+        const onboardingOk = localStorage.getItem('nf-onboarding-ok');
+        document.getElementById('onboarding').style.display = onboardingOk ? 'none' : 'flex';
+        if (onboardingOk) {
           document.getElementById('app').style.display = 'block';
           carregarConfig();
         }
