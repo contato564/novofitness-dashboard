@@ -14,7 +14,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .shell{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 80px}
 
 /* ── ONBOARDING ── */
-#onboarding{position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:24px}
+#onboarding{position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:flex-start;justify-content:center;padding:24px;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .ob-box{width:100%;max-width:480px;text-align:center}
 .ob-brand{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:4px;color:var(--accent);margin-bottom:4px}
 .ob-sub{font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:2px;margin-bottom:48px}
@@ -256,7 +256,7 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
 <body>
 
 <!-- ══ ONBOARDING ══ -->
-<div id="onboarding" style="overflow-y:auto;scroll-behavior:smooth" onload="this.scrollTop=0">
+<div id="onboarding" style="overflow-y:auto;scroll-behavior:smooth">
   <div class="ob-box" style="max-width:600px;text-align:left;padding:40px 20px">
     <div style="text-align:center;margin-bottom:40px">
       <div class="ob-brand">NOVO FITNESS</div>
@@ -1395,7 +1395,7 @@ async function verificarAcesso(userInfo, token) {
         if (temOnboarding && !localStorage.getItem('nf-onboarding-ok')) {
           const ob = document.getElementById('onboarding');
           ob.style.display = 'flex';
-          setTimeout(() => { ob.scrollTop = 0; }, 50);
+          setTimeout(() => { ob.scrollTop = 0; window.scrollTo(0,0); }, 100);
         } else {
           document.getElementById('app').style.display = 'block';
           carregarConfig();
