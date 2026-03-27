@@ -256,7 +256,7 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
 <body>
 
 <!-- ══ ONBOARDING ══ -->
-<div id="onboarding" style="overflow-y:auto">
+<div id="onboarding" style="overflow-y:auto;scroll-behavior:smooth" onload="this.scrollTop=0">
   <div class="ob-box" style="max-width:600px;text-align:left;padding:40px 20px">
     <div style="text-align:center;margin-bottom:40px">
       <div class="ob-brand">NOVO FITNESS</div>
@@ -1393,7 +1393,9 @@ async function verificarAcesso(userInfo, token) {
         document.getElementById('login-screen').style.display = 'none';
         const temOnboarding = !localStorage.getItem('nf-aluno') || localStorage.getItem('nf-aluno') === userInfo.name;
         if (temOnboarding && !localStorage.getItem('nf-onboarding-ok')) {
-          document.getElementById('onboarding').style.display = 'flex';
+          const ob = document.getElementById('onboarding');
+          ob.style.display = 'flex';
+          setTimeout(() => { ob.scrollTop = 0; }, 50);
         } else {
           document.getElementById('app').style.display = 'block';
           carregarConfig();
