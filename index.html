@@ -14,7 +14,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .shell{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 80px}
 
 /* ── ONBOARDING ── */
-#onboarding{position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:flex-start;justify-content:center;padding:24px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#onboarding{position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;padding:24px}
 .ob-box{width:100%;max-width:480px;text-align:center}
 .ob-brand{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:4px;color:var(--accent);margin-bottom:4px}
 .ob-sub{font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:2px;margin-bottom:48px}
@@ -256,7 +256,7 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
 <body>
 
 <!-- ══ ONBOARDING ══ -->
-<div id="onboarding" style="overflow-y:auto;scroll-behavior:smooth">
+<div id="onboarding" style="overflow-y:auto">
   <div class="ob-box" style="max-width:600px;text-align:left;padding:40px 20px">
     <div style="text-align:center;margin-bottom:40px">
       <div class="ob-brand">NOVO FITNESS</div>
@@ -642,7 +642,7 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
         </button>
         <div class="ss" id="st-primeiro-treino" style="justify-content:center;margin-top:12px"></div>
         <div style="margin-top:20px;font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:1px">
-          VOCÊ RECEBERÁ UM EMAIL EM ATÉ 2 HORAS
+          SEU TREINO ESTARÁ PRONTO EM ATÉ 2 HORAS
         </div>
       </div>
     </section>
@@ -651,19 +651,39 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
   <!-- ESTADO: TREINO JÁ GERADO -->
   <div id="mt-pronto" style="display:none">
     <section>
-      <div class="sl">Seu planejamento</div>
+      <div class="sl">Método do mês</div>
       <div class="card" style="background:#0f1a09;border-color:#2a3d15">
         <div class="acl ag"></div>
-        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:20px">
-          <div style="font-size:40px">📋</div>
-          <div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px">Planejamento pronto</div>
-            <div style="font-size:13px;color:var(--muted);margin-top:4px" id="mt-info-data"></div>
-          </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:10px">OBSERVAÇÕES DO DIEGO</div>
+        <div style="font-size:13px;line-height:1.8;color:var(--text)" id="mt-obs-diego"></div>
+      </div>
+    </section>
+    <section>
+      <div class="sl">Resumo do método</div>
+      <div class="card">
+        <div class="acl ay"></div>
+        <div style="font-size:13px;line-height:1.8;color:var(--muted)" id="mt-metodo-resumo"></div>
+        <div style="margin-top:16px" id="mt-metas-wrap"></div>
+      </div>
+    </section>
+    <section>
+      <div class="sl">Progressão semanal</div>
+      <div class="card">
+        <div class="acl ab"></div>
+        <div style="font-size:13px;line-height:1.8;color:var(--muted)" id="mt-progressao"></div>
+      </div>
+    </section>
+    <section>
+      <div class="sl">Nutrição e hidratação</div>
+      <div class="card" id="mt-nutricao-card" style="display:none">
+        <div class="acl ao"></div>
+        <div class="g4" style="margin-bottom:16px">
+          <div><div class="ct">Calorias</div><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--orange)" id="mt-nut-cal">—</div></div>
+          <div><div class="ct">Proteína</div><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--green)" id="mt-nut-prot">—</div></div>
+          <div><div class="ct">Carboidrato</div><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--a3)" id="mt-nut-carbo">—</div></div>
+          <div><div class="ct">Hidratação</div><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--accent)" id="mt-nut-hidra">—</div></div>
         </div>
-        <a id="mt-link-doc" href="#" target="_blank" class="btn" style="text-decoration:none;display:inline-flex">
-          VER MEU TREINO COMPLETO →
-        </a>
+        <div style="font-size:13px;color:var(--muted);line-height:1.7" id="mt-nut-obs"></div>
       </div>
     </section>
     <section>
@@ -671,7 +691,7 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
       <div class="card">
         <div class="acl ay"></div>
         <div style="font-size:14px;color:var(--muted);margin-bottom:16px;line-height:1.6">
-          Quando chegar o momento de atualizar seu treino para o próximo mês, clique abaixo. O sistema vai considerar toda sua evolução e gerar um plano novo.
+          Quando chegar o momento de atualizar seu treino, clique abaixo. O sistema vai considerar toda sua evolução real e gerar o próximo ciclo.
         </div>
         <button class="btn btn-g" onclick="mostrarAtualizacao()">SOLICITAR TREINO DO PRÓXIMO MÊS</button>
       </div>
@@ -686,9 +706,9 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
         <div style="font-size:48px;margin-bottom:20px">⏳</div>
         <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1px;margin-bottom:12px" id="mt-aguardando-title">Preparando seu treino</div>
         <div style="font-size:14px;color:var(--muted);max-width:380px;margin:0 auto;line-height:1.7" id="mt-aguardando-msg">
-          Seu planejamento está sendo preparado com base nos seus dados. Em até 2 horas você receberá um email com o link do seu treino completo.
+          Seu planejamento está sendo preparado com base nos seus dados. Em até 2 horas seu treino estará disponível diretamente no app.
         </div>
-        <div style="margin-top:28px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:2px">VERIFIQUE SEU EMAIL</div>
+        <div style="margin-top:28px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:2px">AGUARDE — SERÁ ATUALIZADO AUTOMATICAMENTE</div>
       </div>
     </section>
   </div>
@@ -743,20 +763,63 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
 
 <!-- ════ PAGE: TREINO ════ -->
 <div class="page" id="page-treino">
-  <section>
-    <div class="sl">Musculação — evolução de carga</div>
-    <div style="font-size:13px;color:var(--muted);margin-bottom:16px">Registre as cargas usadas. O delta aparece automaticamente comparando com a semana anterior.</div>
-    <div class="tabs" id="musc-tabs"></div>
-    <div id="musc-panes"></div>
-    <div style="margin-top:12px">
-      <button class="btn btn-g" onclick="enviarCargas()">SALVAR CARGAS NO SHEETS</button>
-      <div class="ss" id="st-cargas"></div>
-    </div>
-  </section>
+
+  <!-- SEM TREINO -->
+  <div id="treino-vazio" style="display:none">
+    <section>
+      <div class="card" style="text-align:center;padding:48px 24px">
+        <div class="acl ay"></div>
+        <div style="font-size:48px;margin-bottom:16px">💪</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;margin-bottom:8px">Aguardando seu treino</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.7">Seu planejamento de musculação aparecerá aqui assim que for gerado.</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- TREINO GERADO -->
+  <div id="treino-conteudo" style="display:none">
+    <section>
+      <div class="sl">Musculação — semana completa</div>
+      <div class="tabs" id="musc-tabs-plano"></div>
+      <div id="musc-panes-plano"></div>
+    </section>
+    <section>
+      <div class="sl">Registrar carga realizada</div>
+      <div class="card">
+        <div class="acl ag"></div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:16px">Selecione o treino e registre as cargas que você usou hoje.</div>
+        <div class="tabs" id="musc-tabs-reg"></div>
+        <div id="musc-panes-reg"></div>
+        <div style="margin-top:12px">
+          <button class="btn btn-g" onclick="enviarCargas()">SALVAR CARGAS</button>
+          <div class="ss" id="st-cargas"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
 </div><!-- /page-treino -->
 
 <!-- ════ PAGE: CORRIDA ════ -->
 <div class="page" id="page-corrida">
+
+  <!-- PROGRAMAÇÃO DO MÊS -->
+  <div id="corrida-plano-wrap" style="display:none">
+    <section>
+      <div class="sl">Programação do mês</div>
+      <div id="corrida-plano-sessoes"></div>
+    </section>
+    <section>
+      <div class="sl">Zonas de corrida</div>
+      <div class="card" id="corrida-zonas-card" style="display:none">
+        <div class="acl ab"></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:4px">REFERÊNCIA</div>
+        <div style="font-size:13px;color:var(--text);margin-bottom:16px" id="corrida-zonas-ref"></div>
+        <div id="corrida-zonas-lista" style="display:grid;gap:8px"></div>
+      </div>
+    </section>
+  </div>
+
   <section>
     <div class="sl">Corrida — registro de treinos</div>
     <div class="g2">
@@ -1310,9 +1373,8 @@ function verificarSessao() {
         S.aluno = s.nome || s.email.split('@')[0];
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('aguardando-screen').style.display = 'none';
-        const onboardingOk = localStorage.getItem('nf-onboarding-ok');
-        document.getElementById('onboarding').style.display = onboardingOk ? 'none' : 'flex';
-        if (onboardingOk) {
+        document.getElementById('onboarding').style.display = localStorage.getItem('nf-aluno') ? 'none' : 'flex';
+        if (localStorage.getItem('nf-aluno')) {
           document.getElementById('app').style.display = 'block';
           carregarConfig();
         }
@@ -1394,9 +1456,7 @@ async function verificarAcesso(userInfo, token) {
         document.getElementById('login-screen').style.display = 'none';
         const temOnboarding = !localStorage.getItem('nf-aluno') || localStorage.getItem('nf-aluno') === userInfo.name;
         if (temOnboarding && !localStorage.getItem('nf-onboarding-ok')) {
-          const ob = document.getElementById('onboarding');
-          ob.style.display = 'flex';
-          setTimeout(() => { ob.scrollTop = 0; window.scrollTo(0,0); }, 100);
+          document.getElementById('onboarding').style.display = 'flex';
         } else {
           document.getElementById('app').style.display = 'block';
           carregarConfig();
@@ -1592,6 +1652,8 @@ function showPage(id, btn) {
   if (id === 'semana') renderBoasVindas();
   if (id === 'evolucao') carregarEvolucao();
   if (id === 'meutreino') carregarStatusTreino();
+  if (id === 'treino') carregarPlanoNasAbas();
+  if (id === 'corrida') carregarPlanoNasAbas();
   if (id === 'perfil') { renderPerfilResumo(); carregarRecado(); }
 }
 
@@ -1915,6 +1977,19 @@ function saveExRows(ti) {
 
 function getExParaEnviar() {
   const todos = [];
+  // Usar dados do plano se disponível
+  if (planoApp && planoApp.musculacao) {
+    planoApp.musculacao.forEach((t, ti) => {
+      const exs = S.exercicios[ti] || [];
+      exs.forEach(ex => {
+        if (ex && ex.nome && ex.atual) {
+          todos.push({treino: t.nome, nome: ex.nome, series: ex.series||'—', atual: ex.atual, anterior: ex.prev || null});
+        }
+      });
+    });
+    if (todos.length) return todos;
+  }
+  // Fallback para tabela antiga
   CFG.treinos.forEach((nome, ti) => {
     const tbody = document.getElementById('tbody-' + ti); if (!tbody) return;
     Array.from(tbody.children).forEach(tr => {
@@ -2401,6 +2476,22 @@ function ocultarTodosMT() {
   });
 }
 
+// ── PLANO DO APP ──────────────────────────────────────────
+let planoApp = null;
+
+async function carregarPlanoApp() {
+  if (!S.aluno) return null;
+  try {
+    const d = await getData({ action: 'plano_app', aluno: S.aluno });
+    if (d.ok && d.plano) {
+      planoApp = d.plano;
+      localStorage.removeItem('nf-treino-aguardando');
+      return d.plano;
+    }
+  } catch(e) {}
+  return null;
+}
+
 async function carregarStatusTreino() {
   if (!S.aluno) return;
   ocultarTodosMT();
@@ -2408,24 +2499,268 @@ async function carregarStatusTreino() {
   // 1. Aguardando geração
   const aguardando = localStorage.getItem('nf-treino-aguardando');
   if (aguardando) {
+    // Tentar buscar mesmo assim — pode já estar pronto
+    const plano = await carregarPlanoApp();
+    if (plano) {
+      renderMeuTreino(plano);
+      return;
+    }
     document.getElementById('mt-aguardando').style.display = 'block';
     return;
   }
 
-  // 2. Verificar se há treino gerado no Sheets
-  try {
-    const d = await getData({ action: 'treino', aluno: S.aluno });
-    if (d.ok && d.treino && d.treino.url) {
-      document.getElementById('mt-pronto').style.display = 'block';
-      document.getElementById('mt-link-doc').href = d.treino.url;
-      document.getElementById('mt-info-data').textContent = 'Gerado em: ' + (d.treino.data || '');
-      localStorage.removeItem('nf-treino-aguardando');
-      return;
-    }
-  } catch(e) {}
+  // 2. Verificar plano no Sheets
+  const plano = await carregarPlanoApp();
+  if (plano) {
+    renderMeuTreino(plano);
+    return;
+  }
 
   // 3. Sem treino — mostrar estado vazio
   document.getElementById('mt-vazio').style.display = 'block';
+}
+
+function renderMeuTreino(plano) {
+  document.getElementById('mt-pronto').style.display = 'block';
+
+  // Observações do Diego
+  const obsEl = document.getElementById('mt-obs-diego');
+  if (obsEl && plano.observacoes_diego) obsEl.textContent = plano.observacoes_diego;
+
+  // Resumo do método
+  const metEl = document.getElementById('mt-metodo-resumo');
+  if (metEl && plano.metodo_resumo) metEl.textContent = plano.metodo_resumo;
+
+  // Progressão
+  const progEl = document.getElementById('mt-progressao');
+  if (progEl && plano.progressao_semanal) progEl.textContent = plano.progressao_semanal;
+
+  // Metas
+  const metasEl = document.getElementById('mt-metas-wrap');
+  if (metasEl && plano.metas_mes && plano.metas_mes.length) {
+    metasEl.innerHTML = '<div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:10px">METAS DO MÊS</div>' +
+      plano.metas_mes.map(m => `<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px"><span style="color:var(--accent);flex-shrink:0">→</span><span style="font-size:13px;color:var(--muted);line-height:1.6">${m}</span></div>`).join('');
+  }
+
+  // Nutrição
+  const nut = plano.nutricao;
+  if (nut) {
+    const nutCard = document.getElementById('mt-nutricao-card');
+    if (nutCard) nutCard.style.display = 'block';
+    const el = (id, v) => { const e = document.getElementById(id); if(e) e.textContent = v; };
+    el('mt-nut-cal', (nut.calorias_dia || '—') + ' kcal');
+    el('mt-nut-prot', (nut.proteina_g || '—') + 'g');
+    el('mt-nut-carbo', (nut.carbo_g || '—') + 'g');
+    el('mt-nut-hidra', nut.hidratacao_ml ? (nut.hidratacao_ml/1000).toFixed(1) + 'L' : '—');
+    const obsNut = document.getElementById('mt-nut-obs');
+    if (obsNut && nut.observacoes) obsNut.textContent = nut.observacoes;
+  }
+}
+
+function renderTreinoMusculacao(plano) {
+  if (!plano || !plano.musculacao || !plano.musculacao.length) {
+    document.getElementById('treino-vazio').style.display = 'block';
+    return;
+  }
+  document.getElementById('treino-conteudo').style.display = 'block';
+
+  // Renderizar visualização do plano
+  const tabsPlano = document.getElementById('musc-tabs-plano');
+  const panesPlano = document.getElementById('musc-panes-plano');
+  tabsPlano.innerHTML = ''; panesPlano.innerHTML = '';
+
+  plano.musculacao.forEach((t, ti) => {
+    const tab = document.createElement('button');
+    tab.className = 'tab' + (ti === 0 ? ' active' : '');
+    tab.textContent = (t.dia_semana || t.nome).toUpperCase();
+    tab.onclick = () => {
+      tabsPlano.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+      panesPlano.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('mpp-' + ti).classList.add('active');
+    };
+    tabsPlano.appendChild(tab);
+
+    const pane = document.createElement('div');
+    pane.className = 'card tab-pane' + (ti === 0 ? ' active' : '');
+    pane.id = 'mpp-' + ti;
+    pane.innerHTML = `
+      <div class="acl ag"></div>
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px">${t.nome}</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">${t.dia_semana || ''} · ${t.horario || ''} · ${t.duracao || ''}</div>
+        </div>
+      </div>
+      ${t.bloco_corretivo ? `<div style="background:#0f1a09;border:1px solid #2a3d15;border-radius:8px;padding:12px;margin-bottom:16px"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:6px">BLOCO CORRETIVO OBRIGATÓRIO</div><div style="font-size:12px;color:var(--muted);line-height:1.7">${t.bloco_corretivo}</div></div>` : ''}
+      <div style="overflow-x:auto">
+        <table class="ex-table">
+          <thead><tr>
+            <th style="min-width:160px">Exercício</th>
+            <th>Cat.</th>
+            <th>Séries</th>
+            <th>Reps</th>
+            <th>Carga</th>
+            <th>Desc.</th>
+          </tr></thead>
+          <tbody>
+            ${(t.exercicios || []).map(ex => `
+              <tr>
+                <td><div style="font-weight:600;font-size:13px">${ex.nome}</div>${ex.nota ? `<div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.5">${ex.nota}</div>` : ''}</td>
+                <td><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:${ex.categoria==='basico'?'var(--accent)':'var(--muted)'};letter-spacing:1px">${ex.categoria || '—'}</span></td>
+                <td style="font-family:'JetBrains Mono',monospace;font-size:13px">${ex.series || '—'}</td>
+                <td style="font-family:'JetBrains Mono',monospace;font-size:13px">${ex.reps || '—'}</td>
+                <td style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--orange)">${ex.carga_sugerida || '—'}</td>
+                <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)">${ex.descanso || '—'}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+      ${t.nota_geral ? `<div style="background:var(--surface);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:12px 14px;margin-top:14px;font-size:12px;color:var(--muted);line-height:1.7">${t.nota_geral}</div>` : ''}
+    `;
+    panesPlano.appendChild(pane);
+  });
+
+  // Renderizar seção de registro de carga
+  const tabsReg = document.getElementById('musc-tabs-reg');
+  const panesReg = document.getElementById('musc-panes-reg');
+  tabsReg.innerHTML = ''; panesReg.innerHTML = '';
+
+  plano.musculacao.forEach((t, ti) => {
+    const tab = document.createElement('button');
+    tab.className = 'tab' + (ti === 0 ? ' active' : '');
+    tab.textContent = (t.dia_semana || 'Treino ' + (ti+1)).toUpperCase();
+    tab.onclick = () => {
+      tabsReg.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+      panesReg.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('mreg-' + ti).classList.add('active');
+    };
+    tabsReg.appendChild(tab);
+
+    const pane = document.createElement('div');
+    pane.className = 'tab-pane' + (ti === 0 ? ' active' : '');
+    pane.id = 'mreg-' + ti;
+    
+    const saved = S.exercicios[ti] || [];
+    const exercicios = t.exercicios || [];
+    
+    pane.innerHTML = `
+      <div style="overflow-x:auto;margin-top:12px">
+        <table class="ex-table">
+          <thead><tr>
+            <th style="min-width:150px">Exercício</th>
+            <th style="width:70px">Séries</th>
+            <th style="width:80px">Carga (kg)</th>
+            <th style="width:70px">Anterior</th>
+            <th style="width:46px">Δ</th>
+          </tr></thead>
+          <tbody id="reg-tbody-${ti}">
+            ${exercicios.map((ex, ei) => {
+              const sv = saved[ei] || {};
+              const prev = sv.prev || sv.atual || null;
+              return `<tr>
+                <td style="font-size:13px;font-weight:600">${ex.nome}</td>
+                <td><input class="serinp" type="text" value="${ex.series}x${ex.reps}" style="width:60px" onchange="saveRegCarga(${ti},${ei},this)"></td>
+                <td><input class="ni" type="number" min="0" step="2.5" placeholder="${ex.carga_sugerida||'kg'}" value="${sv.atual||''}" style="width:72px" onchange="saveRegCarga(${ti},${ei},this)" id="reg-carga-${ti}-${ei}"></td>
+                <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)">${prev ? prev+'kg' : '—'}</td>
+                <td class="cdelta deq" id="reg-delta-${ti}-${ei}">${prev && sv.atual ? calcDelta(parseFloat(sv.atual), parseFloat(prev)) : '—'}</td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>`;
+    panesReg.appendChild(pane);
+  });
+
+  // Atualizar CFG.treinos para compatibilidade
+  CFG.treinos = plano.musculacao.map(t => t.nome);
+}
+
+function calcDelta(atual, prev) {
+  if (!prev || !atual) return '—';
+  const d = atual - prev;
+  if (d > 0) return `<span class="dup">+${d}↑</span>`;
+  if (d < 0) return `<span class="ddown">${d}↓</span>`;
+  return '=';
+}
+
+function saveRegCarga(ti, ei, input) {
+  if (!S.exercicios[ti]) S.exercicios[ti] = [];
+  const old = S.exercicios[ti][ei] || {};
+  const cargaEl = document.getElementById('reg-carga-' + ti + '-' + ei);
+  const atual = cargaEl ? cargaEl.value : '';
+  if (old.atual && atual && old.atual !== atual) {
+    S.exercicios[ti][ei] = { ...old, nome: planoApp?.musculacao?.[ti]?.exercicios?.[ei]?.nome || '', prev: old.atual, atual };
+  } else {
+    S.exercicios[ti][ei] = { ...old, nome: planoApp?.musculacao?.[ti]?.exercicios?.[ei]?.nome || '', atual };
+  }
+  const deltaEl = document.getElementById('reg-delta-' + ti + '-' + ei);
+  if (deltaEl) deltaEl.innerHTML = calcDelta(parseFloat(atual), parseFloat(S.exercicios[ti][ei].prev || 0));
+  save();
+}
+
+function renderCorridaPlano(plano) {
+  if (!plano || !plano.corrida || !plano.corrida.length) return;
+  
+  document.getElementById('corrida-plano-wrap').style.display = 'block';
+  
+  // Sessões semanais
+  const sessoesEl = document.getElementById('corrida-plano-sessoes');
+  sessoesEl.innerHTML = plano.corrida.map(s => `
+    <div class="card" style="margin-bottom:12px">
+      <div class="acl ab"></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px">SEMANA ${s.semana} — ${s.dia_semana}</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">${s.horario || ''}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--a3);letter-spacing:1px">${s.zona || ''}</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--a3)">${s.volume_km || '—'}km</div>
+        </div>
+      </div>
+      <div style="font-weight:600;font-size:13px;margin-bottom:6px">${s.metodo || ''}</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.6">${s.estrutura || ''}</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 12px">
+          <div style="font-size:9px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:2px">PACE</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:13px">${s.pace_min_km || '—'} min/km</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 12px">
+          <div style="font-size:9px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:2px">KM/H</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:13px">${s.kmh || '—'}</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 12px">
+          <div style="font-size:9px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:2px">PSE</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:13px">${s.pse || '—'}</div>
+        </div>
+      </div>
+      ${s.legenda_metodo ? `<div style="background:#0a0f1a;border-left:3px solid var(--a3);border-radius:0 8px 8px 0;padding:10px 12px;margin-top:12px;font-size:12px;color:var(--muted);line-height:1.7">${s.legenda_metodo}</div>` : ''}
+    </div>`).join('');
+
+  // Zonas
+  const zonas = plano.zonas_corrida;
+  if (zonas) {
+    document.getElementById('corrida-zonas-card').style.display = 'block';
+    document.getElementById('corrida-zonas-ref').textContent = zonas.referencia || '';
+    document.getElementById('corrida-zonas-lista').innerHTML = (zonas.zonas || []).map(z => `
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--a3);width:24px;flex-shrink:0">${z.zona}</div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600">${z.nome}</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-top:2px">${z.pace} min/km · ${z.kmh} · PSE ${z.pse}</div>
+          ${z.descricao ? `<div style="font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5">${z.descricao}</div>` : ''}
+        </div>
+      </div>`).join('');
+  }
+}
+
+async function carregarPlanoNasAbas() {
+  const plano = await carregarPlanoApp();
+  if (!plano) return;
+  renderTreinoMusculacao(plano);
+  renderCorridaPlano(plano);
 }
 
 async function enviarAnamnese() {
