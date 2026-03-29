@@ -2538,7 +2538,7 @@ function renderMeuTreino(plano) {
   // Metas
   const metasEl = document.getElementById('mt-metas-wrap');
   if (metasEl && plano.metas_mes && plano.metas_mes.length) {
-    metasEl.innerHTML = '<div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:10px">METAS DO MÊS</div>' +
+    metasEl.innerHTML = '<div style="font-family:JetBrains Mono,monospace;font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:10px">METAS DO MÊS</div>' +
       plano.metas_mes.map(m => `<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px"><span style="color:var(--accent);flex-shrink:0">→</span><span style="font-size:13px;color:var(--muted);line-height:1.6">${m}</span></div>`).join('');
   }
 
