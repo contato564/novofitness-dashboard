@@ -1595,6 +1595,12 @@ async function _enviarAnamneseDoOnboarding() {
     console.log('Anamnese será reenviada depois:', e.message);
   }
   localStorage.setItem('nf-onboarding-ok','1');
+  // Atualizar sessão com o nome real do onboarding
+  const sessao = JSON.parse(localStorage.getItem('nf-sessao') || '{}');
+  if (sessao && S.aluno) {
+    sessao.nomeAluno = S.aluno;
+    localStorage.setItem('nf-sessao', JSON.stringify(sessao));
+  }
   document.getElementById('onboarding').style.display = 'none';
   document.getElementById('app').style.display = 'block';
   carregarConfig();
@@ -2480,8 +2486,10 @@ let planoApp = null;
 
 async function carregarPlanoApp() {
   if (!S.aluno) return null;
+  // Usar nome do onboarding se disponível
+  const nomeAluno = localStorage.getItem('nf-aluno') || S.aluno;
   try {
-    const d = await getData({ action: 'plano_app', aluno: S.aluno });
+    const d = await getData({ action: 'plano_app', aluno: nomeAluno });
     if (d.ok && d.plano) {
       planoApp = d.plano;
       localStorage.removeItem('nf-treino-aguardando');
