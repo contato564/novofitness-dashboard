@@ -2584,40 +2584,26 @@ function renderTreinoMusculacao(plano) {
     const pane = document.createElement('div');
     pane.className = 'card tab-pane' + (ti === 0 ? ' active' : '');
     pane.id = 'mpp-' + ti;
-    pane.innerHTML = `
-      <div class="acl ag"></div>
-      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px">
-        <div>
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px">${t.nome}</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:2px">${t.dia_semana || ''} · ${t.horario || ''} · ${t.duracao || ''}</div>
-        </div>
-      </div>
-      ${t.bloco_corretivo ? `<div style="background:#0f1a09;border:1px solid #2a3d15;border-radius:8px;padding:12px;margin-bottom:16px"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:6px">BLOCO CORRETIVO OBRIGATÓRIO</div><div style="font-size:12px;color:var(--muted);line-height:1.7">${t.bloco_corretivo}</div></div>` : ''}
-      <div style="overflow-x:auto">
-        <table class="ex-table">
-          <thead><tr>
-            <th style="min-width:160px">Exercício</th>
-            <th>Cat.</th>
-            <th>Séries</th>
-            <th>Reps</th>
-            <th>Carga</th>
-            <th>Desc.</th>
-          </tr></thead>
-          <tbody>
-            ${(t.exercicios || []).map(ex => `
-              <tr>
-                <td><div style="font-weight:600;font-size:13px">${ex.nome}</div>${ex.nota ? `<div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.5">${ex.nota}</div>` : ''}</td>
-                <td><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:${ex.categoria==='basico'?'var(--accent)':'var(--muted)'};letter-spacing:1px">${ex.categoria || '—'}</span></td>
-                <td style="font-family:'JetBrains Mono',monospace;font-size:13px">${ex.series || '—'}</td>
-                <td style="font-family:'JetBrains Mono',monospace;font-size:13px">${ex.reps || '—'}</td>
-                <td style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--orange)">${ex.carga_sugerida || '—'}</td>
-                <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)">${ex.descanso || '—'}</td>
-              </tr>`).join('')}
-          </tbody>
-        </table>
-      </div>
-      ${t.nota_geral ? `<div style="background:var(--surface);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:12px 14px;margin-top:14px;font-size:12px;color:var(--muted);line-height:1.7">${t.nota_geral}</div>` : ''}
-    `;
+    let exRows = (t.exercicios || []).map(ex => {
+      const notaHtml = ex.nota ? '<div style="font-size:11px;color:var(--muted);margin-top:3px;line-height:1.5">' + ex.nota + '</div>' : '';
+      const catColor = ex.categoria === 'basico' ? 'var(--accent)' : 'var(--muted)';
+      return '<tr><td><div style="font-weight:600;font-size:13px">' + ex.nome + '</div>' + notaHtml + '</td>' +
+        '<td><span style="font-family:JetBrains Mono,monospace;font-size:9px;color:' + catColor + ';letter-spacing:1px">' + (ex.categoria || '—') + '</span></td>' +
+        '<td style="font-family:JetBrains Mono,monospace;font-size:13px">' + (ex.series || '—') + '</td>' +
+        '<td style="font-family:JetBrains Mono,monospace;font-size:13px">' + (ex.reps || '—') + '</td>' +
+        '<td style="font-family:JetBrains Mono,monospace;font-size:13px;color:var(--orange)">' + (ex.carga_sugerida || '—') + '</td>' +
+        '<td style="font-family:JetBrains Mono,monospace;font-size:11px;color:var(--muted)">' + (ex.descanso || '—') + '</td></tr>';
+    }).join('');
+    const blocoHtml = t.bloco_corretivo ? '<div style="background:#0f1a09;border:1px solid #2a3d15;border-radius:8px;padding:12px;margin-bottom:16px"><div style="font-family:JetBrains Mono,monospace;font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:6px">BLOCO CORRETIVO OBRIGATÓRIO</div><div style="font-size:12px;color:var(--muted);line-height:1.7">' + t.bloco_corretivo + '</div></div>' : '';
+    const notaGeralHtml = t.nota_geral ? '<div style="background:var(--surface);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:12px 14px;margin-top:14px;font-size:12px;color:var(--muted);line-height:1.7">' + t.nota_geral + '</div>' : '';
+    pane.innerHTML = '<div class="acl ag"></div>' +
+      '<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px"><div>' +
+      '<div style="font-family:Bebas Neue,sans-serif;font-size:18px;letter-spacing:1px">' + t.nome + '</div>' +
+      '<div style="font-size:12px;color:var(--muted);margin-top:2px">' + (t.dia_semana||'') + ' · ' + (t.horario||'') + ' · ' + (t.duracao||'') + '</div>' +
+      '</div></div>' + blocoHtml +
+      '<div style="overflow-x:auto"><table class="ex-table"><thead><tr>' +
+      '<th style="min-width:160px">Exercício</th><th>Cat.</th><th>Séries</th><th>Reps</th><th>Carga</th><th>Desc.</th>' +
+      '</tr></thead><tbody>' + exRows + '</tbody></table></div>' + notaGeralHtml;
     panesPlano.appendChild(pane);
   });
 
@@ -2645,31 +2631,22 @@ function renderTreinoMusculacao(plano) {
     const saved = S.exercicios[ti] || [];
     const exercicios = t.exercicios || [];
     
-    pane.innerHTML = `
-      <div style="overflow-x:auto;margin-top:12px">
-        <table class="ex-table">
-          <thead><tr>
-            <th style="min-width:150px">Exercício</th>
-            <th style="width:70px">Séries</th>
-            <th style="width:80px">Carga (kg)</th>
-            <th style="width:70px">Anterior</th>
-            <th style="width:46px">Δ</th>
-          </tr></thead>
-          <tbody id="reg-tbody-${ti}">
-            ${exercicios.map((ex, ei) => {
-              const sv = saved[ei] || {};
-              const prev = sv.prev || sv.atual || null;
-              return `<tr>
-                <td style="font-size:13px;font-weight:600">${ex.nome}</td>
-                <td><input class="serinp" type="text" value="${ex.series}x${ex.reps}" style="width:60px" onchange="saveRegCarga(${ti},${ei},this)"></td>
-                <td><input class="ni" type="number" min="0" step="2.5" placeholder="${ex.carga_sugerida||'kg'}" value="${sv.atual||''}" style="width:72px" onchange="saveRegCarga(${ti},${ei},this)" id="reg-carga-${ti}-${ei}"></td>
-                <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)">${prev ? prev+'kg' : '—'}</td>
-                <td class="cdelta deq" id="reg-delta-${ti}-${ei}">${prev && sv.atual ? calcDelta(parseFloat(sv.atual), parseFloat(prev)) : '—'}</td>
-              </tr>`;
-            }).join('')}
-          </tbody>
-        </table>
-      </div>`;
+    const regRows = exercicios.map((ex, ei) => {
+      const sv = saved[ei] || {};
+      const prev = sv.prev || sv.atual || null;
+      const deltaHtml = (prev && sv.atual) ? calcDelta(parseFloat(sv.atual), parseFloat(prev)) : '—';
+      return '<tr>' +
+        '<td style="font-size:13px;font-weight:600">' + ex.nome + '</td>' +
+        '<td><input class="serinp" type="text" value="' + ex.series + 'x' + ex.reps + '" style="width:60px" onchange="saveRegCarga(' + ti + ',' + ei + ',this)"></td>' +
+        '<td><input class="ni" type="number" min="0" step="2.5" placeholder="' + (ex.carga_sugerida||'kg') + '" value="' + (sv.atual||'') + '" style="width:72px" onchange="saveRegCarga(' + ti + ',' + ei + ',this)" id="reg-carga-' + ti + '-' + ei + '"></td>' +
+        '<td style="font-family:JetBrains Mono,monospace;font-size:11px;color:var(--muted)">' + (prev ? prev+'kg' : '—') + '</td>' +
+        '<td class="cdelta deq" id="reg-delta-' + ti + '-' + ei + '">' + deltaHtml + '</td>' +
+        '</tr>';
+    }).join('');
+    pane.innerHTML = '<div style="overflow-x:auto;margin-top:12px"><table class="ex-table"><thead><tr>' +
+      '<th style="min-width:150px">Exercício</th><th style="width:70px">Séries</th>' +
+      '<th style="width:80px">Carga (kg)</th><th style="width:70px">Anterior</th><th style="width:46px">Δ</th>' +
+      '</tr></thead><tbody id="reg-tbody-' + ti + '">' + regRows + '</tbody></table></div>';
     panesReg.appendChild(pane);
   });
 
