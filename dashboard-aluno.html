@@ -708,7 +708,8 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
         <div style="font-size:14px;color:var(--muted);max-width:380px;margin:0 auto;line-height:1.7" id="mt-aguardando-msg">
           Seu planejamento está sendo preparado com base nos seus dados. Em até 2 horas seu treino estará disponível diretamente no app.
         </div>
-        <div style="margin-top:28px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:2px">AGUARDE — SERÁ ATUALIZADO AUTOMATICAMENTE</div>
+        <div style="margin-top:28px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:2px">VERIFICANDO A CADA 30 SEGUNDOS</div>
+        <button class="btn" onclick="carregarStatusTreino()" style="margin-top:20px;font-size:13px;padding:10px 24px;background:var(--surface);color:var(--text);border:1px solid var(--border)">ATUALIZAR AGORA</button>
       </div>
     </section>
   </div>
@@ -1587,12 +1588,17 @@ function finalizarOnboarding() {
 
 async function _enviarAnamneseDoOnboarding() {
   const btn = document.querySelector('.ob-btn');
+  const err = document.getElementById('ob-err');
   if (btn) { btn.disabled = true; btn.textContent = 'ENVIANDO...'; }
+  if (err) err.textContent = '';
+  // Seta flag antes de tentar — dados não são perdidos mesmo em caso de falha
+  localStorage.setItem('nf-treino-aguardando', '1');
   try {
     await postData({ tipo: 'anamnese', aluno: S.aluno, ...S.anamnese });
-    localStorage.setItem('nf-treino-aguardando', '1');
   } catch(e) {
-    console.log('Anamnese será reenviada depois:', e.message);
+    if (err) err.textContent = '⚠ Falha ao enviar seus dados: ' + e.message + '. Verifique sua conexão e tente novamente.';
+    if (btn) { btn.disabled = false; btn.textContent = 'CRIAR MEU PERFIL E GERAR TREINO →'; }
+    return; // Mantém o aluno no onboarding para tentar novamente
   }
   localStorage.setItem('nf-onboarding-ok','1');
   // Atualizar sessão com o nome real do onboarding
@@ -1654,6 +1660,7 @@ function showPage(id, btn) {
   document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
   document.getElementById('page-' + id).classList.add('active');
   btn.classList.add('active');
+  if (id !== 'meutreino') pararPollingTreino(); // Para polling ao sair da aba
   if (id === 'semana') renderBoasVindas();
   if (id === 'evolucao') carregarEvolucao();
   if (id === 'meutreino') carregarStatusTreino();
@@ -2475,7 +2482,7 @@ function mostrarAnamnese() {
 }
 
 function ocultarTodosMT() {
-  ['mt-vazio','mt-aguardando','mt-pronto','mt-atualizacao'].forEach(id => {
+  ['mt-vazio','mt-aguardando','mt-pronto','mt-atualizacao','mt-anamnese'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = 'none';
   });
@@ -2499,6 +2506,25 @@ async function carregarPlanoApp() {
   return null;
 }
 
+// ── POLLING DE TREINO ─────────────────────────────
+let _pollingTreino = null;
+
+function iniciarPollingTreino() {
+  pararPollingTreino();
+  _pollingTreino = setInterval(async () => {
+    const plano = await carregarPlanoApp();
+    if (plano) {
+      pararPollingTreino();
+      ocultarTodosMT();
+      renderMeuTreino(plano);
+    }
+  }, 30000);
+}
+
+function pararPollingTreino() {
+  if (_pollingTreino) { clearInterval(_pollingTreino); _pollingTreino = null; }
+}
+
 async function carregarStatusTreino() {
   if (!S.aluno) return;
   ocultarTodosMT();
@@ -2513,6 +2539,7 @@ async function carregarStatusTreino() {
       return;
     }
     document.getElementById('mt-aguardando').style.display = 'block';
+    iniciarPollingTreino();
     return;
   }
 
