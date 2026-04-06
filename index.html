@@ -407,6 +407,208 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
         </div>
       </div>
 
+      <div style="background:#111116;border:1px solid #22222e;border-radius:12px;padding:20px">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;color:#e8ff47;margin-bottom:4px">SUA PROGRAMAÇÃO DE TREINOS</div>
+        <div style="font-size:12px;color:#6b6b7a;margin-bottom:20px">Preencha as modalidades que pratica ou pretende praticar.</div>
+
+        <div style="display:grid;gap:0">
+
+          <!-- MUSCULAÇÃO -->
+          <div style="padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid #22222e">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:#e8ff47;margin-bottom:12px">MUSCULAÇÃO</div>
+            <div style="display:grid;gap:12px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div>
+                  <div class="ob-label">Dias por semana</div>
+                  <select id="ob-musc-dias" class="ob-input" style="width:100%">
+                    <option value="1">1 dia</option>
+                    <option value="2">2 dias</option>
+                    <option value="3" selected>3 dias</option>
+                    <option value="4">4 dias</option>
+                    <option value="5">5 dias</option>
+                    <option value="6">6 dias</option>
+                  </select>
+                </div>
+                <div>
+                  <div class="ob-label">Horário preferido</div>
+                  <select id="ob-musc-horario" class="ob-input" style="width:100%">
+                    <option value="Manhã">Manhã</option>
+                    <option value="Tarde" selected>Tarde</option>
+                    <option value="Noite">Noite</option>
+                    <option value="Flexível">Flexível</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <div class="ob-label">Nível atual</div>
+                <select id="ob-musc-nivel" class="ob-input" style="width:100%">
+                  <option value="Iniciante">Iniciante (menos de 1 ano)</option>
+                  <option value="Intermediário">Intermediário (1 a 3 anos)</option>
+                  <option value="Avançado">Avançado (mais de 3 anos)</option>
+                </select>
+              </div>
+              <div>
+                <div class="ob-label">Dias fixos preferidos</div>
+                <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:6px">
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'SEG',obDiasMusc)">SEG</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'TER',obDiasMusc)">TER</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'QUA',obDiasMusc)">QUA</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'QUI',obDiasMusc)">QUI</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'SEX',obDiasMusc)">SEX</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'SAB',obDiasMusc)">SAB</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'DOM',obDiasMusc)">DOM</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CORRIDA -->
+          <div style="padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid #22222e">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:#47c2ff;margin-bottom:12px">CORRIDA</div>
+            <div style="display:grid;gap:12px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div>
+                  <div class="ob-label">Dias por semana</div>
+                  <select id="ob-corr-dias" class="ob-input" style="width:100%">
+                    <option value="0">Não vou correr</option>
+                    <option value="1">1 dia</option>
+                    <option value="2">2 dias</option>
+                    <option value="3" selected>3 dias</option>
+                    <option value="4">4 dias</option>
+                    <option value="5">5 dias</option>
+                  </select>
+                </div>
+                <div>
+                  <div class="ob-label">Horário preferido</div>
+                  <select id="ob-corr-horario" class="ob-input" style="width:100%">
+                    <option value="Manhã">Manhã</option>
+                    <option value="Tarde" selected>Tarde</option>
+                    <option value="Noite">Noite</option>
+                    <option value="Flexível">Flexível</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <div class="ob-label">Já corre atualmente?</div>
+                <select id="ob-corr-atual" class="ob-input" style="width:100%" onchange="obCorridaAtualChange()">
+                  <option value="nao">Não / Nunca corri</option>
+                  <option value="irregular">Sim, mas de forma irregular</option>
+                  <option value="regular">Sim, corro regularmente</option>
+                </select>
+              </div>
+              <div id="ob-corr-nivel-wrap" style="display:none">
+                <div class="ob-label">Nível na corrida</div>
+                <select id="ob-corr-nivel" class="ob-input" style="width:100%">
+                  <option value="Iniciante">Iniciante (até 5km)</option>
+                  <option value="Intermediário">Intermediário (5km a 10km)</option>
+                  <option value="Avançado">Avançado (10km+)</option>
+                </select>
+              </div>
+              <div>
+                <div class="ob-label">Dias fixos preferidos</div>
+                <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:6px">
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'SEG',obDiasCorrida)">SEG</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'TER',obDiasCorrida)">TER</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'QUA',obDiasCorrida)">QUA</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'QUI',obDiasCorrida)">QUI</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'SEX',obDiasCorrida)">SEX</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'SAB',obDiasCorrida)">SAB</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'DOM',obDiasCorrida)">DOM</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- JIU-JITSU -->
+          <div style="padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid #22222e">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:#ff8a3d;margin-bottom:12px">JIU-JITSU</div>
+            <div style="display:grid;gap:12px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div>
+                  <div class="ob-label">Dias por semana</div>
+                  <select id="ob-jiu2-dias" class="ob-input" style="width:100%">
+                    <option value="0">Não pratico</option>
+                    <option value="1">1 dia</option>
+                    <option value="2">2 dias</option>
+                    <option value="3">3 dias</option>
+                    <option value="4">4 dias</option>
+                    <option value="5">5 dias</option>
+                  </select>
+                </div>
+                <div>
+                  <div class="ob-label">Horário das aulas</div>
+                  <select id="ob-jiu2-horario" class="ob-input" style="width:100%">
+                    <option value="Manhã">Manhã</option>
+                    <option value="Tarde">Tarde</option>
+                    <option value="Noite" selected>Noite</option>
+                    <option value="Variado">Variado</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <div class="ob-label">Faixa atual</div>
+                <select id="ob-jiu2-faixa" class="ob-input" style="width:100%">
+                  <option value="Não pratico">Não pratico</option>
+                  <option value="Branca">Branca</option>
+                  <option value="Cinza">Cinza</option>
+                  <option value="Azul">Azul</option>
+                  <option value="Roxa">Roxa</option>
+                  <option value="Marrom">Marrom</option>
+                  <option value="Preta">Preta</option>
+                </select>
+              </div>
+              <div>
+                <div class="ob-label">Dias fixos das aulas</div>
+                <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:6px">
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'SEG',obDiasJiu2)">SEG</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'TER',obDiasJiu2)">TER</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'QUA',obDiasJiu2)">QUA</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'QUI',obDiasJiu2)">QUI</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'SEX',obDiasJiu2)">SEX</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'SAB',obDiasJiu2)">SAB</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'DOM',obDiasJiu2)">DOM</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- OUTRO ESPORTE -->
+          <div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:#6b6b7a;margin-bottom:12px">OUTRO ESPORTE</div>
+            <div style="display:grid;gap:12px">
+              <div>
+                <div class="ob-label">Nome do esporte (opcional)</div>
+                <input id="ob-outro-nome" class="ob-input" type="text" placeholder="Ex: Natação, Ciclismo, Futebol...">
+              </div>
+              <div>
+                <div class="ob-label">Dias por semana</div>
+                <select id="ob-outro-dias" class="ob-input" style="width:100%">
+                  <option value="0">Não pratico</option>
+                  <option value="1">1 dia</option>
+                  <option value="2">2 dias</option>
+                  <option value="3">3 dias</option>
+                  <option value="4">4 dias</option>
+                  <option value="5">5 dias</option>
+                </select>
+              </div>
+              <div>
+                <div class="ob-label">Dias fixos</div>
+                <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:6px">
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'SEG',obDiasOutro)">SEG</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'TER',obDiasOutro)">TER</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'QUA',obDiasOutro)">QUA</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'QUI',obDiasOutro)">QUI</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'SEX',obDiasOutro)">SEX</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'SAB',obDiasOutro)">SAB</button>
+                  <button type="button" class="pse-btn" style="width:38px;height:34px;font-size:10px;border-radius:6px" onclick="obToggleDiaMod(this,'DOM',obDiasOutro)">DOM</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
 
     <button class="ob-btn" onclick="finalizarOnboarding()" style="margin-top:24px">CRIAR MEU PERFIL E GERAR TREINO →</button>
@@ -1523,6 +1725,27 @@ function obToggleDia(el, dia) {
   else obDias.push(dia);
 }
 
+// Arrays de dias para cada modalidade da programação de treinos
+let obDiasMusc = [], obDiasCorrida = [], obDiasJiu2 = [], obDiasOutro = [];
+
+function obToggleDiaMod(el, dia, arr) {
+  const on = arr.includes(dia);
+  if (on) {
+    arr.splice(arr.indexOf(dia), 1);
+    el.style.background = 'var(--surface)';
+    el.style.color = 'var(--muted)';
+  } else {
+    arr.push(dia);
+    el.style.background = 'var(--accent)';
+    el.style.color = '#0a0a0c';
+  }
+}
+
+function obCorridaAtualChange() {
+  const val = document.getElementById('ob-corr-atual').value;
+  document.getElementById('ob-corr-nivel-wrap').style.display = val === 'nao' ? 'none' : 'block';
+}
+
 // Calcular pace do onboarding
 ['ob-3km-min','ob-3km-seg'].forEach(id => {
   document.addEventListener('DOMContentLoaded', () => {
@@ -1580,6 +1803,26 @@ function finalizarOnboarding() {
     tempo3km,
     dores: document.getElementById('ob-dores').value || 'Nenhuma',
     historico: document.getElementById('ob-historico').value || 'Sem histórico',
+    // Programação de treinos — musculação
+    diasMusculacao: document.getElementById('ob-musc-dias').value,
+    diasFixosMusculacao: obDiasMusc.join(', ') || 'Não especificado',
+    horarioMusculacao: document.getElementById('ob-musc-horario').value,
+    nivelMusculacao: document.getElementById('ob-musc-nivel').value,
+    // Programação de treinos — corrida
+    diasCorrida: document.getElementById('ob-corr-dias').value,
+    diasFixosCorrida: obDiasCorrida.join(', ') || 'Não especificado',
+    horarioCorrida: document.getElementById('ob-corr-horario').value,
+    correAtualmente: document.getElementById('ob-corr-atual').value,
+    nivelCorrida: document.getElementById('ob-corr-nivel').value,
+    // Programação de treinos — jiu-jitsu
+    diasJiuJitsu: document.getElementById('ob-jiu2-dias').value,
+    diasFixosJiuJitsu: obDiasJiu2.join(', ') || 'Não especificado',
+    horarioJiuJitsu: document.getElementById('ob-jiu2-horario').value,
+    faixaJiuJitsu: document.getElementById('ob-jiu2-faixa').value,
+    // Programação de treinos — outro esporte
+    outroEsporte: document.getElementById('ob-outro-nome').value || 'Nenhum',
+    diasOutroEsporte: document.getElementById('ob-outro-dias').value,
+    diasFixosOutroEsporte: obDiasOutro.join(', ') || 'Não especificado',
   };
   save();
   // Enviar anamnese automaticamente
