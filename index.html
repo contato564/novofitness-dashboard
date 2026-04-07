@@ -635,7 +635,6 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
   <button class="nav-tab active" onclick="showPage('semana',this)">SEMANA</button>
   <button class="nav-tab" onclick="showPage('treino',this)">TREINO</button>
   <button class="nav-tab" onclick="showPage('corrida',this)">CORRIDA</button>
-  <button class="nav-tab" onclick="showPage('meutreino',this)">MEU TREINO</button>
   <button class="nav-tab" onclick="showPage('evolucao',this)">EVOLUÇÃO</button>
   <button class="nav-tab" onclick="showPage('perfil',this)">PERFIL</button>
 </nav>
@@ -825,144 +824,6 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
   </section>
 
 </div><!-- /page-semana -->
-
-<!-- ════ PAGE: MEU TREINO ════ -->
-<div class="page" id="page-meutreino">
-
-  <!-- ESTADO: SEM TREINO AINDA -->
-  <div id="mt-vazio">
-    <section>
-      <div class="card" style="text-align:center;padding:48px 24px">
-        <div class="acl ay"></div>
-        <div style="font-size:48px;margin-bottom:20px">🏋️</div>
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1px;margin-bottom:12px">Seu treino personalizado</div>
-        <div style="font-size:14px;color:var(--muted);max-width:380px;margin:0 auto;line-height:1.7;margin-bottom:28px">
-          Com base nos seus dados, vou montar um planejamento completo de musculação e corrida adaptado à sua rotina, objetivo e nível.
-        </div>
-        <button class="btn" onclick="solicitarPrimeiroTreino()" id="btn-primeiro-treino" style="font-size:15px;padding:14px 32px">
-          SOLICITAR MEU PRIMEIRO TREINO
-        </button>
-        <div class="ss" id="st-primeiro-treino" style="justify-content:center;margin-top:12px"></div>
-        <div style="margin-top:20px;font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:1px">
-          SEU TREINO ESTARÁ PRONTO EM ATÉ 2 HORAS
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- ESTADO: TREINO JÁ GERADO -->
-  <div id="mt-pronto" style="display:none">
-    <section>
-      <div class="sl">Método do mês</div>
-      <div class="card" style="background:#0f1a09;border-color:#2a3d15">
-        <div class="acl ag"></div>
-        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:10px">OBSERVAÇÕES DO DIEGO</div>
-        <div style="font-size:13px;line-height:1.8;color:var(--text)" id="mt-obs-diego"></div>
-      </div>
-    </section>
-    <section>
-      <div class="sl">Resumo do método</div>
-      <div class="card">
-        <div class="acl ay"></div>
-        <div style="font-size:13px;line-height:1.8;color:var(--muted)" id="mt-metodo-resumo"></div>
-        <div style="margin-top:16px" id="mt-metas-wrap"></div>
-      </div>
-    </section>
-    <section>
-      <div class="sl">Progressão semanal</div>
-      <div class="card">
-        <div class="acl ab"></div>
-        <div style="font-size:13px;line-height:1.8;color:var(--muted)" id="mt-progressao"></div>
-      </div>
-    </section>
-    <section>
-      <div class="sl">Nutrição e hidratação</div>
-      <div class="card" id="mt-nutricao-card" style="display:none">
-        <div class="acl ao"></div>
-        <div class="g4" style="margin-bottom:16px">
-          <div><div class="ct">Calorias</div><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--orange)" id="mt-nut-cal">—</div></div>
-          <div><div class="ct">Proteína</div><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--green)" id="mt-nut-prot">—</div></div>
-          <div><div class="ct">Carboidrato</div><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--a3)" id="mt-nut-carbo">—</div></div>
-          <div><div class="ct">Hidratação</div><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--accent)" id="mt-nut-hidra">—</div></div>
-        </div>
-        <div style="font-size:13px;color:var(--muted);line-height:1.7" id="mt-nut-obs"></div>
-      </div>
-    </section>
-    <section>
-      <div class="sl">Próximo mês</div>
-      <div class="card">
-        <div class="acl ay"></div>
-        <div style="font-size:14px;color:var(--muted);margin-bottom:16px;line-height:1.6">
-          Quando chegar o momento de atualizar seu treino, clique abaixo. O sistema vai considerar toda sua evolução real e gerar o próximo ciclo.
-        </div>
-        <button class="btn btn-g" onclick="mostrarAtualizacao()">SOLICITAR TREINO DO PRÓXIMO MÊS</button>
-      </div>
-    </section>
-  </div>
-
-  <!-- ESTADO: AGUARDANDO GERAÇÃO -->
-  <div id="mt-aguardando" style="display:none">
-    <section>
-      <div class="card" style="text-align:center;padding:48px 24px">
-        <div class="acl ay"></div>
-        <div style="font-size:48px;margin-bottom:20px">⏳</div>
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1px;margin-bottom:12px" id="mt-aguardando-title">Preparando seu treino</div>
-        <div style="font-size:14px;color:var(--muted);max-width:380px;margin:0 auto;line-height:1.7" id="mt-aguardando-msg">
-          Seu planejamento está sendo preparado com base nos seus dados. Em até 2 horas seu treino estará disponível diretamente no app.
-        </div>
-        <div style="margin-top:28px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:2px">VERIFICANDO A CADA 30 SEGUNDOS</div>
-        <button class="btn" onclick="carregarStatusTreino()" style="margin-top:20px;font-size:13px;padding:10px 24px;background:var(--surface);color:var(--text);border:1px solid var(--border)">ATUALIZAR AGORA</button>
-      </div>
-    </section>
-  </div>
-
-
-  <!-- ESTADO: ATUALIZAÇÃO MENSAL -->
-  <div id="mt-atualizacao" style="display:none">
-    <section>
-      <div class="sl">Atualização mensal — 5 perguntas</div>
-      <div style="font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.7">
-        Responda com honestidade. A IA vai ler seu histórico completo e gerar o treino do próximo mês com base na sua evolução real.
-      </div>
-      <div class="card">
-        <div class="acl ay"></div>
-        <div style="display:grid;gap:18px">
-          <div>
-            <div style="font-size:11px;color:var(--muted);margin-bottom:8px;font-family:'JetBrains Mono',monospace;letter-spacing:1px">1. COMO FOI SUA ENERGIA GERAL NO ÚLTIMO MÊS? (1–5)</div>
-            <div style="display:flex;gap:6px" id="atl-energia-wrap">
-              <button class="pse-btn" style="width:36px;height:36px" onclick="setAtl('energia',1,this)">1</button>
-              <button class="pse-btn" style="width:36px;height:36px" onclick="setAtl('energia',2,this)">2</button>
-              <button class="pse-btn" style="width:36px;height:36px" onclick="setAtl('energia',3,this)">3</button>
-              <button class="pse-btn" style="width:36px;height:36px" onclick="setAtl('energia',4,this)">4</button>
-              <button class="pse-btn" style="width:36px;height:36px" onclick="setAtl('energia',5,this)">5</button>
-            </div>
-            <input type="hidden" id="atl-energia">
-          </div>
-          <div>
-            <div style="font-size:11px;color:var(--muted);margin-bottom:6px;font-family:'JetBrains Mono',monospace;letter-spacing:1px">2. ALGUMA MUDANÇA NA SUA ROTINA?</div>
-            <textarea id="atl-rotina" class="farea" style="min-height:70px" placeholder="Ex: Mudei de emprego, horário diferente, viajei muito..."></textarea>
-          </div>
-          <div>
-            <div style="font-size:11px;color:var(--muted);margin-bottom:6px;font-family:'JetBrains Mono',monospace;letter-spacing:1px">3. SURGIU ALGUMA DOR OU DESCONFORTO?</div>
-            <textarea id="atl-dores" class="farea" style="min-height:70px" placeholder="Ex: Dor no joelho na corrida longa. Se não, escreva Nenhuma."></textarea>
-          </div>
-          <div>
-            <div style="font-size:11px;color:var(--muted);margin-bottom:6px;font-family:'JetBrains Mono',monospace;letter-spacing:1px">4. QUAL EVOLUÇÃO VOCÊ PERCEBEU?</div>
-            <textarea id="atl-evolucao" class="farea" style="min-height:70px" placeholder="Ex: Aumentei carga no agachamento, pace melhorou, emagreci 2kg..."></textarea>
-          </div>
-          <div>
-            <div style="font-size:11px;color:var(--muted);margin-bottom:6px;font-family:'JetBrains Mono',monospace;letter-spacing:1px">5. QUAL O SEU FOCO PARA O PRÓXIMO MÊS?</div>
-            <textarea id="atl-foco" class="farea" style="min-height:70px" placeholder="Ex: Quero melhorar meu pace na corrida e aumentar volume de pernas..."></textarea>
-          </div>
-        </div>
-        <button class="btn" id="btn-atualizacao" onclick="enviarAtualizacao()" style="width:100%;justify-content:center;margin-top:4px">ENVIAR E GERAR TREINO DO PRÓXIMO MÊS</button>
-        <div class="ss" id="st-atualizacao"></div>
-      </div>
-    </section>
-  </div>
-
-
-</div><!-- /page-meutreino -->
 
 <!-- ════ PAGE: TREINO ════ -->
 <div class="page" id="page-treino">
@@ -1834,8 +1695,6 @@ async function _enviarAnamneseDoOnboarding() {
   const err = document.getElementById('ob-err');
   if (btn) { btn.disabled = true; btn.textContent = 'ENVIANDO...'; }
   if (err) err.textContent = '';
-  // Seta flag antes de tentar — dados não são perdidos mesmo em caso de falha
-  localStorage.setItem('nf-treino-aguardando', '1');
   try {
     await postData({ tipo: 'anamnese', aluno: S.aluno, ...S.anamnese });
   } catch(e) {
@@ -1903,10 +1762,8 @@ function showPage(id, btn) {
   document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
   document.getElementById('page-' + id).classList.add('active');
   btn.classList.add('active');
-  if (id !== 'meutreino') pararPollingTreino(); // Para polling ao sair da aba
   if (id === 'semana') renderBoasVindas();
   if (id === 'evolucao') carregarEvolucao();
-  if (id === 'meutreino') carregarStatusTreino();
   if (id === 'treino') carregarPlanoNasAbas();
   if (id === 'corrida') carregarPlanoNasAbas();
   if (id === 'perfil') { renderPerfilResumo(); carregarRecado(); }
@@ -2718,19 +2575,6 @@ function calcPace3km() {
   document.getElementById('pace-calc').style.display = 'block';
 }
 
-function mostrarAnamnese() {
-  document.getElementById('mt-pronto').style.display = 'none';
-  document.getElementById('mt-aguardando').style.display = 'none';
-  document.getElementById('mt-anamnese').style.display = 'block';
-}
-
-function ocultarTodosMT() {
-  ['mt-vazio','mt-aguardando','mt-pronto','mt-atualizacao','mt-anamnese'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.style.display = 'none';
-  });
-}
-
 // ── PLANO DO APP ──────────────────────────────────────────
 let planoApp = null;
 
@@ -2742,96 +2586,10 @@ async function carregarPlanoApp() {
     const d = await getData({ action: 'plano_app', aluno: nomeAluno });
     if (d.ok && d.plano) {
       planoApp = d.plano;
-      localStorage.removeItem('nf-treino-aguardando');
       return d.plano;
     }
   } catch(e) {}
   return null;
-}
-
-// ── POLLING DE TREINO ─────────────────────────────
-let _pollingTreino = null;
-
-function iniciarPollingTreino() {
-  pararPollingTreino();
-  _pollingTreino = setInterval(async () => {
-    const plano = await carregarPlanoApp();
-    if (plano) {
-      pararPollingTreino();
-      ocultarTodosMT();
-      renderMeuTreino(plano);
-    }
-  }, 30000);
-}
-
-function pararPollingTreino() {
-  if (_pollingTreino) { clearInterval(_pollingTreino); _pollingTreino = null; }
-}
-
-async function carregarStatusTreino() {
-  if (!S.aluno) return;
-  ocultarTodosMT();
-
-  // 1. Aguardando geração
-  const aguardando = localStorage.getItem('nf-treino-aguardando');
-  if (aguardando) {
-    // Tentar buscar mesmo assim — pode já estar pronto
-    const plano = await carregarPlanoApp();
-    if (plano) {
-      renderMeuTreino(plano);
-      return;
-    }
-    document.getElementById('mt-aguardando').style.display = 'block';
-    iniciarPollingTreino();
-    return;
-  }
-
-  // 2. Verificar plano no Sheets
-  const plano = await carregarPlanoApp();
-  if (plano) {
-    renderMeuTreino(plano);
-    return;
-  }
-
-  // 3. Sem treino — mostrar estado vazio
-  document.getElementById('mt-vazio').style.display = 'block';
-}
-
-function renderMeuTreino(plano) {
-  document.getElementById('mt-pronto').style.display = 'block';
-
-  // Observações do Diego
-  const obsEl = document.getElementById('mt-obs-diego');
-  if (obsEl && plano.observacoes_diego) obsEl.textContent = plano.observacoes_diego;
-
-  // Resumo do método
-  const metEl = document.getElementById('mt-metodo-resumo');
-  if (metEl && plano.metodo_resumo) metEl.textContent = plano.metodo_resumo;
-
-  // Progressão
-  const progEl = document.getElementById('mt-progressao');
-  if (progEl && plano.progressao_semanal) progEl.textContent = plano.progressao_semanal;
-
-  // Metas
-  const metasEl = document.getElementById('mt-metas-wrap');
-  if (metasEl && plano.metas_mes && plano.metas_mes.length) {
-    metasEl.innerHTML = '<div style="font-family:JetBrains Mono,monospace;font-size:10px;letter-spacing:2px;color:var(--muted);margin-bottom:10px">METAS DO MÊS</div>' +
-      plano.metas_mes.map(m => `<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px"><span style="color:var(--accent);flex-shrink:0">→</span><span style="font-size:13px;color:var(--muted);line-height:1.6;min-width:0;overflow-wrap:break-word;word-break:break-word">${m}</span></div>`).join('');
-  }
-
-  // Nutrição
-  const nut = plano.nutricao;
-  if (nut) {
-    const nutCard = document.getElementById('mt-nutricao-card');
-    if (nutCard) nutCard.style.display = 'block';
-    const el = (id, v) => { const e = document.getElementById(id); if(e) e.textContent = v; };
-    el('mt-nut-cal', (nut.calorias_dia || '—') + ' kcal');
-    el('mt-nut-prot', (nut.proteina_g || '—') + 'g');
-    el('mt-nut-carbo', (nut.carbo_g || '—') + 'g');
-    el('mt-nut-hidra', nut.hidratacao_ml ? (nut.hidratacao_ml/1000).toFixed(1) + 'L' : '—');
-    const obsNut = document.getElementById('mt-nut-obs');
-    if (obsNut && nut.observacoes) obsNut.textContent = nut.observacoes;
-  }
 }
 
 function renderTreinoMusculacao(plano) {
@@ -3017,59 +2775,6 @@ async function carregarPlanoNasAbas() {
   renderCorridaPlano(plano);
 }
 
-async function enviarAnamnese() {
-  if (!S.aluno) { toast('Configure seu perfil primeiro!'); return; }
-  const email = document.getElementById('an-email').value.trim();
-  const idade = document.getElementById('an-idade').value;
-  const peso = document.getElementById('an-peso').value;
-  const altura = document.getElementById('an-altura').value;
-  const objetivo = document.getElementById('an-objetivo').value;
-  const nivel = document.getElementById('an-nivel').value;
-  const jiu = document.getElementById('an-jiu').value;
-  const tempo = document.getElementById('an-tempo').value;
-  const dores = document.getElementById('an-dores').value.trim();
-  const historico = document.getElementById('an-historico').value.trim();
-
-  if (!email) { toast('Digite seu email!'); return; }
-  if (!idade || !peso || !altura) { toast('Preencha seus dados pessoais!'); return; }
-  if (!objetivo) { toast('Selecione seu objetivo!'); return; }
-  if (!nivel) { toast('Selecione seu nível!'); return; }
-  if (!diasDisponiveis.length) { toast('Selecione seus dias disponíveis!'); return; }
-
-  const btn = document.getElementById('btn-anamnese'); btn.disabled = true;
-  setSt('st-anamnese', 'loading', '⏳ Enviando seus dados...');
-
-  try {
-    await postData({
-      tipo: 'anamnese',
-      aluno: S.aluno, email, idade, peso, altura, objetivo, nivel,
-      diasDisponiveis: diasDisponiveis.join(', '),
-      diasJiu: jiu, tempoDia: tempo,
-      dores: dores || 'Nenhuma', historico: historico || 'Sem histórico',
-      corre: document.getElementById('an-corre').value || 'Não informado',
-      tempo3km: (() => {
-        const m = document.getElementById('an-3km-min').value;
-        const s = document.getElementById('an-3km-seg').value;
-        if (!m) return 'Não informado';
-        return m + 'min' + (s ? s + 's' : '') + ' (pace aprox. ' + (() => {
-          const t = parseInt(m)*60 + parseInt(s||0);
-          const p = Math.round(t/3);
-          return Math.floor(p/60) + ':' + String(p%60).padStart(2,'0');
-        })() + ' min/km)';
-      })(),
-    });
-    localStorage.setItem('nf-treino-aguardando', '1');
-    document.getElementById('mt-anamnese').style.display = 'none';
-    document.getElementById('mt-aguardando').style.display = 'block';
-    toast('Dados enviados! Aguarde o email em até 2 horas.');
-  } catch(e) {
-    setSt('st-anamnese', 'err', '✗ ' + e.message);
-    btn.disabled = false;
-  }
-}
-
-
-
 function calcFadigaSilenciosa() {
   const treinos = totalC();
   const sono = diario.sono || 3;
@@ -3128,72 +2833,6 @@ async function gerarRelatorio() {
     if (d.ok) { setSt('st-relatorio', 'ok', `✓ Relatório enviado para seu email! (${d.totalAlunos} alunos)`); toast('Relatório enviado!'); }
   } catch(e) { setSt('st-relatorio', 'err', '✗ ' + e.message); }
 }
-
-// ── ATUALIZAÇÃO MENSAL ────────────────────────────────────
-const atl = { energia: 0 };
-function setAtl(campo, val, btn) {
-  atl[campo] = val;
-  const wrap = document.getElementById('atl-' + campo + '-wrap');
-  wrap.querySelectorAll('.pse-btn').forEach((b, i) => {
-    const on = i+1 === val;
-    b.style.background = on ? 'var(--accent)' : 'var(--surface)';
-    b.style.color = on ? '#0a0a0c' : 'var(--muted)';
-    b.style.borderColor = on ? 'var(--accent)' : 'var(--border)';
-  });
-  document.getElementById('atl-' + campo).value = val;
-}
-
-function mostrarAtualizacao() {
-  document.getElementById('mt-pronto').style.display = 'none';
-  document.getElementById('mt-aguardando').style.display = 'none';
-  document.getElementById('mt-anamnese').style.display = 'none';
-  document.getElementById('mt-atualizacao').style.display = 'block';
-}
-
-async function enviarAtualizacao() {
-  if (!S.aluno) { toast('Configure seu perfil!'); return; }
-  if (!atl.energia) { toast('Responda como foi sua energia!'); return; }
-  const btn = document.getElementById('btn-atualizacao'); btn.disabled = true;
-  setSt('st-atualizacao', 'loading', '⏳ Enviando...');
-  try {
-    const anamnese = S.anamnese || {};
-    await postData({
-      tipo: 'atualizacao',
-      aluno: S.aluno,
-      email: anamnese.email || '',
-      mes: (S.semana > 4 ? Math.ceil(S.semana/4) : 2),
-      energia: atl.energia,
-      rotina: document.getElementById('atl-rotina').value || 'Nenhuma',
-      dores: document.getElementById('atl-dores').value || 'Nenhuma',
-      evolucao: document.getElementById('atl-evolucao').value || 'Não informado',
-      foco: document.getElementById('atl-foco').value || 'Não informado',
-    });
-    localStorage.setItem('nf-treino-aguardando', '1');
-    document.getElementById('mt-atualizacao').style.display = 'none';
-    document.getElementById('mt-aguardando').style.display = 'block';
-    toast('Respostas enviadas! Treino em até 2 horas.');
-  } catch(e) { setSt('st-atualizacao', 'err', '✗ ' + e.message); btn.disabled = false; }
-}
-
-
-async function solicitarPrimeiroTreino() {
-  if (!S.aluno) { toast('Configure seu perfil primeiro!'); return; }
-  const btn = document.getElementById('btn-primeiro-treino');
-  btn.disabled = true;
-  setSt('st-primeiro-treino', 'loading', '⏳ Enviando seus dados...');
-  try {
-    const anamnese = S.anamnese || { aluno: S.aluno };
-    await postData({ tipo: 'anamnese', aluno: S.aluno, ...anamnese });
-    localStorage.setItem('nf-treino-aguardando', '1');
-    ocultarTodosMT();
-    document.getElementById('mt-aguardando').style.display = 'block';
-    toast('Treino solicitado! Email em até 2 horas.');
-  } catch(e) {
-    setSt('st-primeiro-treino', 'err', '✗ ' + e.message);
-    btn.disabled = false;
-  }
-}
-
 
 // ── BOAS-VINDAS DINÂMICAS ─────────────────────────────────
 const TREINOS_SEMANA = {
@@ -3272,12 +2911,6 @@ function renderBoasVindas() {
   if (el2) el2.innerHTML = msg;
   if (el3) el3.textContent = dataStr.toUpperCase();
   if (el4) el4.textContent = treino ? treino.toUpperCase() : 'DIA DE DESCANSO';
-
-  // Personalizar mensagem de aguardo
-  const mta = document.getElementById('mt-aguardando-title');
-  const mtm = document.getElementById('mt-aguardando-msg');
-  if (mta && nome) mta.textContent = `${nome}, seu treino está sendo preparado`;
-  if (mtm && nome) mtm.textContent = `Analisei seus dados com atenção. Em até 2 horas você receberá um email com seu planejamento completo.`;
 }
 
 // ── FRASES DE EVOLUÇÃO ────────────────────────────────────
