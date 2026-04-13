@@ -1435,6 +1435,7 @@ function verificarSessao() {
       if (s.email && s.aprovado && s.expira > Date.now()) {
         googleUser = s;
         S.aluno = s.nome || s.email.split('@')[0];
+          S.email = s.email;
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('aguardando-screen').style.display = 'none';
         document.getElementById('onboarding').style.display = localStorage.getItem('nf-aluno') ? 'none' : 'flex';
@@ -2581,9 +2582,9 @@ let planoApp = null;
 async function carregarPlanoApp() {
   if (!S.aluno) return null;
   // Usar nome do onboarding se disponível
-  const nomeAluno = localStorage.getItem('nf-aluno') || S.aluno;
+  const emailAluno = S.email || localStorage.getItem('nf-email') || S.aluno;
   try {
-    const d = await getData({ action: 'plano_app', aluno: nomeAluno });
+    const d = await getData({ action: 'plano_app', aluno: emailAluno });
     if (d.ok && d.plano) {
       planoApp = d.plano;
       return d.plano;
