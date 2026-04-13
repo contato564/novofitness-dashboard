@@ -2580,10 +2580,13 @@ let planoApp = null;
 
 async function carregarPlanoApp() {
   if (!S.aluno) return null;
-  // Usar nome do onboarding se disponível
   const nomeAluno = localStorage.getItem('nf-aluno') || S.aluno;
+  const sessao = JSON.parse(localStorage.getItem('nf-sessao') || '{}');
+  const email = sessao.email || '';
   try {
-    const d = await getData({ action: 'plano_app', aluno: nomeAluno });
+    const params = new URLSearchParams({ action: 'plano_app', aluno: nomeAluno, email: email, t: Date.now() });
+    const r = await fetch(WEBHOOK + '?' + params.toString());
+    const d = await r.json();
     if (d.ok && d.plano) {
       planoApp = d.plano;
       return d.plano;
