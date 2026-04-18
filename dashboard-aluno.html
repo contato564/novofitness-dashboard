@@ -1402,11 +1402,81 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
 // ══════════════════════════════════════════════════
 const WEBHOOK = 'https://script.google.com/macros/s/AKfycbxbR-fT9bMlCp6N3rfoRYGPJHGBLuzoMM-XWtHUc0-CiHUdhS52T2pjmS2PxHFJl2O-Lw/exec';
 
-const DIAS_CONFIG = [
+// DIAS_CONFIG é gerado dinamicamente em initApp() via buildDiasConfig()
+// Fallback padrão usado até que a anamnese seja carregada
+let DIAS_CONFIG = [
   {dia:'SEG',descanso:false},{dia:'TER',descanso:false},{dia:'QUA',descanso:false},
-  {dia:'QUI',descanso:true},{dia:'SEX',descanso:false},{dia:'SAB',descanso:false},
-  {dia:'DOM',descanso:true},
+  {dia:'QUI',descanso:false},{dia:'SEX',descanso:false},{dia:'SAB',descanso:false},
+  {dia:'DOM',descanso:false},
 ];
+
+function buildDiasConfig() {
+  const a = S.anamnese;
+  if (!a) return; // mantém fallback
+
+  // Mapa abreviação PT → índice JS (0=Dom,...,6=Sáb)
+  const ABREV_MAP = {
+    'DOM':0,'SEG':1,'TER':2,'QUA':3,'QUI':4,'SEX':5,'SAB':6
+  };
+  const ORDEM = ['SEG','TER','QUA','QUI','SEX','SAB','DOM']; // ordem de exibição
+
+  // Parseia um campo "TER, QUI, SAB" → Set de abreviações em maiúsculas
+  function parseDias(campo) {
+    if (!campo || campo === 'Não especificado') return new Set();
+    return new Set(campo.split(',').map(s => s.trim().toUpperCase()).filter(s => s in ABREV_MAP));
+  }
+
+  const musc    = parseDias(a.diasFixosMusculacao);
+  const corrida = parseDias(a.diasFixosCorrida);
+  const jiu     = parseDias(a.diasFixosJiuJitsu);
+  const outro   = parseDias(a.diasFixosOutroEsporte);
+
+  DIAS_CONFIG = ORDEM.map(dia => {
+    const modalidades = [];
+    if (musc.has(dia))    modalidades.push('musc');
+    if (corrida.has(dia)) modalidades.push('corrida');
+    if (jiu.has(dia))     modalidades.push('jiu');
+    if (outro.has(dia))   modalidades.push('outro');
+    const descanso = modalidades.length === 0;
+    const tipo = descanso ? null : modalidades.join('+');
+    return { dia, descanso, tipo };
+  });
+}
+
+function buildTreinosSemana() {
+  const a = S.anamnese;
+  // Resultado: { 0: 'texto'|null, ..., 6: 'texto'|null }
+  const result = {0:null,1:null,2:null,3:null,4:null,5:null,6:null};
+  if (!a) return result;
+
+  const ABREV_MAP = {
+    'DOM':0,'SEG':1,'TER':2,'QUA':3,'QUI':4,'SEX':5,'SAB':6
+  };
+
+  function parseDias(campo) {
+    if (!campo || campo === 'Não especificado') return new Set();
+    return new Set(campo.split(',').map(s => s.trim().toUpperCase()).filter(s => s in ABREV_MAP));
+  }
+
+  const musc    = parseDias(a.diasFixosMusculacao);
+  const corrida = parseDias(a.diasFixosCorrida);
+  const jiu     = parseDias(a.diasFixosJiuJitsu);
+  const outro   = parseDias(a.diasFixosOutroEsporte);
+
+  const LABEL = { musc: 'Musculação', corrida: 'Corrida', jiu: 'Jiu-Jitsu', outro: 'Outro Esporte' };
+
+  Object.keys(ABREV_MAP).forEach(dia => {
+    const idx = ABREV_MAP[dia];
+    const partes = [];
+    if (musc.has(dia))    partes.push(LABEL.musc);
+    if (corrida.has(dia)) partes.push(LABEL.corrida);
+    if (jiu.has(dia))     partes.push(LABEL.jiu);
+    if (outro.has(dia))   partes.push(LABEL.outro);
+    result[idx] = partes.length > 0 ? partes.join(' + ') : null;
+  });
+
+  return result;
+}
 
 const RANKS = [
   {nome:'NOVATO',min:0,max:499},{nome:'INTERMEDIÁRIO',min:500,max:1199},
@@ -1795,6 +1865,8 @@ async function carregarConfig() {
 
 // ── INIT ───────────────────────────────────────────
 function initApp() {
+  buildDiasConfig();
+  TREINOS_SEMANA = buildTreinosSemana();
   renderHdr();
   renderWeekGrid();
   renderStreak();
@@ -2982,15 +3054,8 @@ async function gerarRelatorio() {
 }
 
 // ── BOAS-VINDAS DINÂMICAS ─────────────────────────────────
-const TREINOS_SEMANA = {
-  0: null,           // Dom — descanso
-  1: 'Treino A — Inferior',
-  2: 'Corrida',
-  3: 'Treino B — Inferior',
-  4: null,           // Qui — descanso
-  5: 'Treino C — Superior',
-  6: 'Core + Específico',
-};
+// TREINOS_SEMANA é gerado dinamicamente em initApp() via buildTreinosSemana()
+let TREINOS_SEMANA = {0:null,1:null,2:null,3:null,4:null,5:null,6:null};
 
 function renderBoasVindas() {
   const nome = S.aluno ? S.aluno.split(' ')[0] : '';
