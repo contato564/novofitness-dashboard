@@ -635,6 +635,7 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
   <button class="nav-tab active" onclick="showPage('semana',this)">SEMANA</button>
   <button class="nav-tab" onclick="showPage('treino',this)">TREINO</button>
   <button class="nav-tab" onclick="showPage('corrida',this)">CORRIDA</button>
+  <button class="nav-tab" onclick="showPage('nutricao',this)">NUTRIÇÃO</button>
   <button class="nav-tab" onclick="showPage('evolucao',this)">EVOLUÇÃO</button>
   <button class="nav-tab" onclick="showPage('perfil',this)">PERFIL</button>
 </nav>
@@ -966,6 +967,17 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
 </div><!-- /page-corrida -->
 
 <!-- ════ PAGE: EVOLUÇÃO ════ -->
+<div class="page" id="page-nutricao">
+  <section>
+    <div class="sl">Nutrição personalizada</div>
+    <div class="card" style="margin-bottom:20px"><div class="acl ay"></div><div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:16px"><div><div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px">Seu plano alimentar</div><div style="font-size:12px;color:var(--muted);margin-top:4px" id="nutri-cat-label">—</div></div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px">BASE: USDA 2025-2030</div></div><div class="nutri-macro-grid"><div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center"><div style="font-size:9px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:4px">KCAL/DIA</div><div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--accent)" id="nutri-kcal">—</div></div><div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center"><div style="font-size:9px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:4px">PROTEÍNA</div><div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--green)" id="nutri-prot">—</div></div><div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center"><div style="font-size:9px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:4px">CARBOIDRATO</div><div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--a3)" id="nutri-carbo">—</div></div><div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center"><div style="font-size:9px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:4px">GORDURA</div><div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--orange)" id="nutri-gordu">—</div></div><div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center"><div style="font-size:9px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:4px">HIDRATAÇÃO</div><div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--a3)" id="nutri-hidra">—</div></div></div></div>
+    <div class="sl">Selecione o cardápio</div>
+    <div class="nutri-toggle"><button class="nutri-toggle-btn active" id="nutri-btn-v1" onclick="trocarVariacaoNutri(1)">OPÇÃO 1 — PADRÃO</button><button class="nutri-toggle-btn" id="nutri-btn-v2" onclick="trocarVariacaoNutri(2)">OPÇÃO 2 — HAMBURGUER</button></div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;color:var(--accent);margin-bottom:16px" id="nutri-var-nome"></div>
+    <div id="nutri-refeicoes"></div>
+    <div class="card" style="background:#0a0f1a;border-color:#1a2a3a;margin-top:8px"><div class="acl ab"></div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--a3);letter-spacing:2px;margin-bottom:8px">ORIENTAÇÕES GERAIS</div><div style="font-size:12px;color:var(--muted);line-height:1.9">Priorize proteína animal. Use manteiga e azeite. Evite ultraprocessados. Carbo de tubérculos. Frutas in natura. Hidrate ao longo do dia.</div></div>
+  </section>
+</div>
 <div class="page" id="page-evolucao">
   <section>
     <div class="sl">Minha evolução</div>
