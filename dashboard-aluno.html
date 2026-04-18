@@ -78,6 +78,19 @@ section{margin-bottom:36px}
 .wd-badge{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--accent);display:none}
 .wday.done .wd-badge{display:block}
 
+/* ── CHECK-IN DIÁRIO ── */
+.diario-check{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;cursor:pointer;transition:all .2s;position:relative;user-select:none}
+.diario-check.done{background:#0f1a09;border-color:var(--green);cursor:default;pointer-events:none}
+.diario-check.done .dc-label{color:var(--green)}
+.diario-check.done::after{content:'✓';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--green);font-weight:700;font-size:14px}
+.diario-check.locked{opacity:.45;cursor:not-allowed;pointer-events:none}
+.diario-check.locked::after{content:'🔒';position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12px}
+.dc-label{font-size:13px;color:var(--text);transition:color .2s}
+.pse-btn-done{background:var(--green)!important;color:#0a0a0c!important;border-color:var(--green)!important;cursor:default!important;pointer-events:none}
+.pse-wrap-locked .pse-btn{opacity:.45;cursor:not-allowed;pointer-events:none}
+.diario-salvo-badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--green);margin-top:8px;padding:6px 10px;background:#0f1a09;border:1px solid var(--green);border-radius:6px}
+.diario-salvo-badge.hidden{display:none}
+
 /* ── BARRA ── */
 .fbwrap{margin-top:12px}
 .fblabel{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px}
@@ -735,13 +748,13 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
         </div>
       </div>
       <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap">
-        <div style="display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;cursor:pointer" id="btn-hidra" onclick="toggleCheck('hidra',this)">
+        <div class="diario-check" id="btn-hidra" onclick="toggleCheck('hidra',this)">
           <span style="font-size:18px">💧</span>
-          <span style="font-size:13px">Hidratei bem hoje</span>
+          <span class="dc-label">Hidratei bem hoje</span>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;cursor:pointer" id="btn-alim" onclick="toggleCheck('alim',this)">
+        <div class="diario-check" id="btn-alim" onclick="toggleCheck('alim',this)">
           <span style="font-size:18px">🥗</span>
-          <span style="font-size:13px">Me alimentei antes do treino</span>
+          <span class="dc-label">Me alimentei antes do treino</span>
         </div>
       </div>
       <div style="margin-top:16px">
@@ -751,7 +764,8 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
           <div style="font-size:12px;color:var(--muted);margin-top:4px" id="fadiga-msg"></div>
         </div>
       </div>
-      <button class="btn btn-g" onclick="salvarDiario()" style="margin-top:14px">SALVAR DIÁRIO DO DIA</button>
+      <button class="btn btn-g" id="btn-salvar-diario" onclick="salvarDiario()" style="margin-top:14px">SALVAR DIÁRIO DO DIA</button>
+      <div class="diario-salvo-badge hidden" id="diario-salvo-badge">✓ DIÁRIO SALVO HOJE — DISPONÍVEL AMANHÃ</div>
       <div class="ss" id="st-diario"></div>
     </div>
   </section>
@@ -1793,6 +1807,7 @@ function initApp() {
   renderXP();
   renderCQ();
   renderKPIs();
+  initDiario();
   // preencher campos de perfil
   document.getElementById('inp-nome').value = S.aluno;
   document.getElementById('inp-semana').value = S.semana;
@@ -2835,7 +2850,84 @@ function calcFadigaSilenciosa() {
 // ── DIÁRIO ────────────────────────────────────────────────
 const diario = { sono: 0, energia: 0, hidra: false, alim: false };
 
+// ── DIÁRIO 24H ────────────────────────────────────
+// Chave no localStorage: 'nf_diario_YYYY-MM-DD'
+// Estrutura: { sono, energia, hidra, alim, savedAt (ISO string) }
+
+function _diarioKey() {
+  return 'nf_diario_' + new Date().toISOString().slice(0, 10);
+}
+
+function _diarioJaSalvoHoje() {
+  const data = localStorage.getItem(_diarioKey());
+  if (!data) return false;
+  try { const obj = JSON.parse(data); return !!obj.savedAt; } catch(e) { return false; }
+}
+
+function _carregarDiarioSalvo() {
+  const data = localStorage.getItem(_diarioKey());
+  if (!data) return null;
+  try { return JSON.parse(data); } catch(e) { return null; }
+}
+
+function _salvarDiarioLocal() {
+  const obj = { sono: diario.sono, energia: diario.energia, hidra: diario.hidra, alim: diario.alim, savedAt: new Date().toISOString() };
+  localStorage.setItem(_diarioKey(), JSON.stringify(obj));
+}
+
+function _aplicarEstadoDiarioSalvo(obj) {
+  // Sono
+  diario.sono = obj.sono;
+  const sonoWrap = document.getElementById('sono-wrap');
+  sonoWrap.querySelectorAll('.pse-btn').forEach((b, i) => {
+    const on = i + 1 === obj.sono;
+    b.style.background = on ? 'var(--green)' : 'var(--surface)';
+    b.style.color = on ? '#0a0a0c' : 'var(--muted)';
+    b.style.borderColor = on ? 'var(--green)' : 'var(--border)';
+  });
+  sonoWrap.classList.add('pse-wrap-locked');
+
+  // Energia
+  diario.energia = obj.energia;
+  const energiaWrap = document.getElementById('energia-wrap');
+  energiaWrap.querySelectorAll('.pse-btn').forEach((b, i) => {
+    const on = i + 1 === obj.energia;
+    b.style.background = on ? 'var(--green)' : 'var(--surface)';
+    b.style.color = on ? '#0a0a0c' : 'var(--muted)';
+    b.style.borderColor = on ? 'var(--green)' : 'var(--border)';
+  });
+  energiaWrap.classList.add('pse-wrap-locked');
+
+  // Hidra
+  diario.hidra = obj.hidra;
+  const btnHidra = document.getElementById('btn-hidra');
+  if (obj.hidra) btnHidra.classList.add('done');
+  else btnHidra.classList.add('locked');
+
+  // Alim
+  diario.alim = obj.alim;
+  const btnAlim = document.getElementById('btn-alim');
+  if (obj.alim) btnAlim.classList.add('done');
+  else btnAlim.classList.add('locked');
+
+  // Botão e badge
+  const btnSalvar = document.getElementById('btn-salvar-diario');
+  const badge = document.getElementById('diario-salvo-badge');
+  btnSalvar.style.display = 'none';
+  badge.classList.remove('hidden');
+
+  calcFadiga();
+}
+
+function initDiario() {
+  const salvo = _carregarDiarioSalvo();
+  if (salvo && salvo.savedAt) {
+    _aplicarEstadoDiarioSalvo(salvo);
+  }
+}
+
 function setDiario(campo, val, btn) {
+  if (_diarioJaSalvoHoje()) return;
   diario[campo] = val;
   const wrap = document.getElementById(campo + '-wrap');
   wrap.querySelectorAll('.pse-btn').forEach((b, i) => {
@@ -2848,6 +2940,7 @@ function setDiario(campo, val, btn) {
 }
 
 function toggleCheck(campo, el) {
+  if (_diarioJaSalvoHoje()) return;
   diario[campo] = !diario[campo];
   el.style.borderColor = diario[campo] ? 'var(--green)' : 'var(--border)';
   el.style.background = diario[campo] ? '#0f1a09' : 'var(--surface)';
@@ -2868,10 +2961,14 @@ function calcFadiga() {
 
 async function salvarDiario() {
   if (!S.aluno) { toast('Configure seu perfil!'); return; }
+  if (_diarioJaSalvoHoje()) { toast('Diário já salvo hoje!'); return; }
   setSt('st-diario', 'loading', '⏳ Salvando...');
   try {
     await postData({ tipo:'diario', aluno:S.aluno, semana:S.semana, sono:diario.sono, energia:diario.energia, hidratacao:diario.hidra, alimentacao:diario.alim });
-    setSt('st-diario', 'ok', '✓ Diário salvo!'); toast('Diário registrado!');
+    _salvarDiarioLocal();
+    _aplicarEstadoDiarioSalvo(_carregarDiarioSalvo());
+    setSt('st-diario', 'ok', '✓ Diário salvo!');
+    toast('Diário registrado!');
   } catch(e) { setSt('st-diario', 'err', '✗ ' + e.message); }
 }
 
