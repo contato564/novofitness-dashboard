@@ -3116,6 +3116,386 @@ async function salvarAvaliacao() {
 }
 
 // ── START ─────────────────────────────────────────
+// ── NUTRIÇÃO — TEMPLATES ─────────────────────────────────
+// 4 categorias × 3 faixas × 2 variações
+// Base: USDA 2025-2030 — proteína animal, gorduras boas, tubérculos, frutas
+
+const NUTRI_TEMPLATES = {
+
+  // ════════════════════════════════════════════════════════
+  // HIPERTROFIA
+  // ════════════════════════════════════════════════════════
+  hipertrofia: {
+    '60-75': {
+      kcal: 2800, proteina: 160, carbo: 310, gordura: 85, hidratacao: 2800,
+      var1: {
+        nome: 'Hipertrofia — Padrão Animal',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['4 ovos inteiros mexidos na manteiga (240 kcal)', 'Batata-doce cozida 150g (130 kcal)', '1 banana-prata (90 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Pré-treino (10h30)', alimentos: ['Frango grelhado 120g (200 kcal)', 'Arroz branco ou mandioca cozida 100g (130 kcal)', 'Azeite de oliva 1 colher de sopa (90 kcal)'] },
+          { nome: 'Almoço (13h)', alimentos: ['Carne vermelha (patinho ou alcatra) 180g (310 kcal)', 'Batata inglesa ou mandioquinha cozida 150g (130 kcal)', 'Folhas verdes à vontade com azeite', 'Fruta de época 1 unidade (60 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 3 unidades (210 kcal)', 'Queijo coalho 40g (120 kcal)', 'Castanha-do-pará 3 unidades (90 kcal)'] },
+          { nome: 'Jantar (20h)', alimentos: ['Frango ou peixe (tilápia/salmão) 200g (280 kcal)', 'Inhame ou batata-doce 150g (130 kcal)', 'Legumes refogados na manteiga (abobrinha, cenoura, brócolis)'] },
+        ]
+      },
+      var2: {
+        nome: 'Hipertrofia — Variação Hambúrguer',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['4 ovos inteiros mexidos na manteiga (240 kcal)', 'Batata-doce cozida 150g (130 kcal)', '1 banana-prata (90 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Pré-treino (10h30)', alimentos: ['Frango grelhado 120g (200 kcal)', 'Arroz branco ou mandioca cozida 100g (130 kcal)', 'Azeite de oliva 1 colher de sopa (90 kcal)'] },
+          { nome: 'Almoço (13h)', alimentos: ['Carne vermelha (patinho ou alcatra) 180g (310 kcal)', 'Batata inglesa ou mandioquinha cozida 150g (130 kcal)', 'Folhas verdes à vontade com azeite', 'Fruta de época 1 unidade (60 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 3 unidades (210 kcal)', 'Queijo coalho 40g (120 kcal)', 'Castanha-do-pará 3 unidades (90 kcal)'] },
+          { nome: 'Jantar (20h) — Hambúrguer Artesanal', alimentos: ['Hambúrguer de carne bovina 180g (patinho + gordura bovina) (420 kcal)', 'Ovo frito na manteiga 1 unidade (90 kcal)', 'Queijo prato ou muçarela 30g (90 kcal)', 'Batata-doce assada como acompanhamento 120g (100 kcal)', 'Sem pão industrial — use folha de alface como wrap ou sirva no prato'] },
+        ]
+      }
+    },
+    '75-90': {
+      kcal: 3200, proteina: 185, carbo: 360, gordura: 95, hidratacao: 3200,
+      var1: {
+        nome: 'Hipertrofia — Padrão Animal',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['5 ovos inteiros mexidos na manteiga (300 kcal)', 'Batata-doce cozida 200g (175 kcal)', '1 banana + 1 fatia de abacaxi (120 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Pré-treino (10h30)', alimentos: ['Frango grelhado 150g (250 kcal)', 'Mandioca cozida 150g (195 kcal)', 'Azeite 1,5 colher de sopa (135 kcal)'] },
+          { nome: 'Almoço (13h)', alimentos: ['Carne vermelha (alcatra ou contrafilé) 220g (380 kcal)', 'Batata inglesa + mandioquinha 180g (160 kcal)', 'Folhas verdes + tomate + azeite', 'Fruta de época (70 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 3 unidades (210 kcal)', 'Queijo minas padrão 50g (140 kcal)', 'Castanha-do-pará 4 unidades + amêndoas 10g (150 kcal)'] },
+          { nome: 'Jantar (20h)', alimentos: ['Salmão ou carne vermelha 220g (350 kcal)', 'Inhame cozido 180g (155 kcal)', 'Legumes refogados na manteiga + alho'] },
+        ]
+      },
+      var2: {
+        nome: 'Hipertrofia — Variação Hambúrguer',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['5 ovos inteiros mexidos na manteiga (300 kcal)', 'Batata-doce cozida 200g (175 kcal)', '1 banana + 1 fatia de abacaxi (120 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Pré-treino (10h30)', alimentos: ['Frango grelhado 150g (250 kcal)', 'Mandioca cozida 150g (195 kcal)', 'Azeite 1,5 colher de sopa (135 kcal)'] },
+          { nome: 'Almoço (13h)', alimentos: ['Carne vermelha (alcatra ou contrafilé) 220g (380 kcal)', 'Batata inglesa + mandioquinha 180g (160 kcal)', 'Folhas verdes + tomate + azeite', 'Fruta de época (70 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 3 unidades (210 kcal)', 'Queijo minas padrão 50g (140 kcal)', 'Castanha-do-pará 4 unidades + amêndoas 10g (150 kcal)'] },
+          { nome: 'Jantar (20h) — Hambúrguer Artesanal', alimentos: ['Hambúrguer duplo de carne bovina 220g (patinho + gordura bovina) (510 kcal)', 'Ovo frito na manteiga 1 unidade (90 kcal)', 'Queijo prato 40g (120 kcal)', 'Batata-doce assada 150g (130 kcal)', 'Sem pão industrial — sirva no prato com folhas e mostarda sem açúcar'] },
+        ]
+      }
+    },
+    '90+': {
+      kcal: 3600, proteina: 210, carbo: 400, gordura: 110, hidratacao: 3600,
+      var1: {
+        nome: 'Hipertrofia — Padrão Animal',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['6 ovos inteiros mexidos na manteiga (360 kcal)', 'Batata-doce cozida 250g (220 kcal)', '1 banana + 1 manga pequena (140 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Pré-treino (10h30)', alimentos: ['Frango grelhado 180g (300 kcal)', 'Mandioca cozida 200g (260 kcal)', 'Azeite 2 colheres de sopa (180 kcal)'] },
+          { nome: 'Almoço (13h)', alimentos: ['Carne vermelha (picanha ou alcatra) 260g (450 kcal)', 'Batata inglesa + inhame 200g (180 kcal)', 'Folhas verdes + pepino + azeite', 'Fruta de época (80 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 4 unidades (280 kcal)', 'Queijo minas padrão 60g (165 kcal)', 'Mix castanha-do-pará + nozes 30g (200 kcal)'] },
+          { nome: 'Jantar (20h)', alimentos: ['Salmão ou carne vermelha 260g (420 kcal)', 'Inhame + mandioquinha 200g (175 kcal)', 'Legumes refogados na manteiga com azeite e ervas'] },
+        ]
+      },
+      var2: {
+        nome: 'Hipertrofia — Variação Hambúrguer',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['6 ovos inteiros mexidos na manteiga (360 kcal)', 'Batata-doce cozida 250g (220 kcal)', '1 banana + 1 manga pequena (140 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Pré-treino (10h30)', alimentos: ['Frango grelhado 180g (300 kcal)', 'Mandioca cozida 200g (260 kcal)', 'Azeite 2 colheres de sopa (180 kcal)'] },
+          { nome: 'Almoço (13h)', alimentos: ['Carne vermelha (picanha ou alcatra) 260g (450 kcal)', 'Batata inglesa + inhame 200g (180 kcal)', 'Folhas verdes + pepino + azeite', 'Fruta de época (80 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 4 unidades (280 kcal)', 'Queijo minas padrão 60g (165 kcal)', 'Mix castanha-do-pará + nozes 30g (200 kcal)'] },
+          { nome: 'Jantar (20h) — Hambúrguer Artesanal', alimentos: ['Hambúrguer triplo de carne bovina 270g (630 kcal)', 'Ovo frito na manteiga 2 unidades (180 kcal)', 'Queijo prato 50g (150 kcal)', 'Batata-doce assada 180g (155 kcal)', 'Sem pão industrial — sirva com folhas, abacate e mostarda artesanal'] },
+        ]
+      }
+    }
+  },
+
+  // ════════════════════════════════════════════════════════
+  // EMAGRECIMENTO
+  // ════════════════════════════════════════════════════════
+  emagrecimento: {
+    '60-75': {
+      kcal: 1900, proteina: 145, carbo: 160, gordura: 70, hidratacao: 2800,
+      var1: {
+        nome: 'Emagrecimento — Padrão Animal',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['3 ovos inteiros mexidos na manteiga (180 kcal)', 'Batata-doce cozida 80g (70 kcal)', '1 fatia de abacaxi ou 1 kiwi (50 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Almoço (12h30)', alimentos: ['Frango grelhado ou peixe (tilápia/atum) 160g (265 kcal)', 'Mandioquinha ou inhame 100g (90 kcal)', 'Folhas verdes + tomate + pepino + azeite 1 colher', 'Fruta de época pequena (50 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 2 unidades (140 kcal)', 'Castanha-do-pará 2 unidades + amêndoas 10g (120 kcal)'] },
+          { nome: 'Jantar (19h30)', alimentos: ['Carne vermelha magra (patinho) ou frango 160g (280 kcal)', 'Legumes no vapor ou refogados na manteiga (abobrinha, brócolis, couve-flor) 200g (80 kcal)', 'Azeite 1 colher de sopa (90 kcal)'] },
+        ]
+      },
+      var2: {
+        nome: 'Emagrecimento — Variação Hambúrguer',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['3 ovos inteiros mexidos na manteiga (180 kcal)', 'Batata-doce cozida 80g (70 kcal)', '1 fatia de abacaxi ou 1 kiwi (50 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Almoço (12h30)', alimentos: ['Frango grelhado ou peixe (tilápia/atum) 160g (265 kcal)', 'Mandioquinha ou inhame 100g (90 kcal)', 'Folhas verdes + tomate + pepino + azeite 1 colher', 'Fruta de época pequena (50 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 2 unidades (140 kcal)', 'Castanha-do-pará 2 unidades + amêndoas 10g (120 kcal)'] },
+          { nome: 'Jantar (19h30) — Hambúrguer Artesanal', alimentos: ['Hambúrguer de patinho 150g (sem gordura adicionada, grelhado) (300 kcal)', 'Ovo frito na manteiga 1 unidade (90 kcal)', 'Folhas + tomate + mostarda sem açúcar', 'Sem batata frita — substitua por abobrinha grelhada ou brócolis', 'Sem pão industrial'] },
+        ]
+      }
+    },
+    '75-90': {
+      kcal: 2100, proteina: 165, carbo: 180, gordura: 75, hidratacao: 3200,
+      var1: {
+        nome: 'Emagrecimento — Padrão Animal',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['4 ovos inteiros mexidos na manteiga (240 kcal)', 'Batata-doce cozida 100g (87 kcal)', '1 banana-prata pequena (70 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Almoço (12h30)', alimentos: ['Frango ou peixe grelhado 180g (300 kcal)', 'Inhame cozido 120g (105 kcal)', 'Folhas verdes + tomate + cenoura + azeite 1 colher', 'Fruta de época (60 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 2 unidades (140 kcal)', 'Queijo coalho 30g (90 kcal)', 'Castanha-do-pará 2 unidades (60 kcal)'] },
+          { nome: 'Jantar (19h30)', alimentos: ['Carne vermelha magra (patinho) 180g (310 kcal)', 'Legumes refogados na manteiga 220g (90 kcal)', 'Azeite 1 colher de sopa (90 kcal)'] },
+        ]
+      },
+      var2: {
+        nome: 'Emagrecimento — Variação Hambúrguer',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['4 ovos inteiros mexidos na manteiga (240 kcal)', 'Batata-doce cozida 100g (87 kcal)', '1 banana-prata pequena (70 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Almoço (12h30)', alimentos: ['Frango ou peixe grelhado 180g (300 kcal)', 'Inhame cozido 120g (105 kcal)', 'Folhas verdes + tomate + cenoura + azeite 1 colher', 'Fruta de época (60 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 2 unidades (140 kcal)', 'Queijo coalho 30g (90 kcal)', 'Castanha-do-pará 2 unidades (60 kcal)'] },
+          { nome: 'Jantar (19h30) — Hambúrguer Artesanal', alimentos: ['Hambúrguer de patinho 170g grelhado (340 kcal)', 'Ovo frito na manteiga 1 unidade (90 kcal)', 'Queijo prato 20g (60 kcal)', 'Folhas + tomate + mostarda sem açúcar', 'Sem batata frita — brócolis ou couve-flor assada como acompanhamento', 'Sem pão industrial'] },
+        ]
+      }
+    },
+    '90+': {
+      kcal: 2400, proteina: 190, carbo: 200, gordura: 85, hidratacao: 3600,
+      var1: {
+        nome: 'Emagrecimento — Padrão Animal',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['4 ovos inteiros mexidos na manteiga (240 kcal)', 'Batata-doce cozida 130g (115 kcal)', '1 banana + 1 fatia de mamão (100 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Almoço (12h30)', alimentos: ['Frango ou peixe 200g (335 kcal)', 'Mandioca ou inhame cozido 150g (195 kcal)', 'Folhas verdes + tomate + pepino + azeite', 'Fruta de época (70 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 3 unidades (210 kcal)', 'Queijo minas padrão 40g (110 kcal)', 'Castanha-do-pará 3 unidades (90 kcal)'] },
+          { nome: 'Jantar (19h30)', alimentos: ['Carne magra (patinho ou alcatra) 200g (345 kcal)', 'Legumes refogados na manteiga 250g (110 kcal)', 'Azeite 1,5 colher de sopa (135 kcal)'] },
+        ]
+      },
+      var2: {
+        nome: 'Emagrecimento — Variação Hambúrguer',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['4 ovos inteiros mexidos na manteiga (240 kcal)', 'Batata-doce cozida 130g (115 kcal)', '1 banana + 1 fatia de mamão (100 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Almoço (12h30)', alimentos: ['Frango ou peixe 200g (335 kcal)', 'Mandioca ou inhame cozido 150g (195 kcal)', 'Folhas verdes + tomate + pepino + azeite', 'Fruta de época (70 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 3 unidades (210 kcal)', 'Queijo minas padrão 40g (110 kcal)', 'Castanha-do-pará 3 unidades (90 kcal)'] },
+          { nome: 'Jantar (19h30) — Hambúrguer Artesanal', alimentos: ['Hambúrguer de patinho 200g grelhado (400 kcal)', 'Ovo frito na manteiga 1 unidade (90 kcal)', 'Queijo prato 30g (90 kcal)', 'Folhas + tomate + mostarda sem açúcar', 'Couve-flor assada ou brócolis como acompanhamento', 'Sem pão industrial'] },
+        ]
+      }
+    }
+  },
+
+  // ════════════════════════════════════════════════════════
+  // RECOMPOSIÇÃO (corrida + saúde)
+  // ════════════════════════════════════════════════════════
+  recomposicao: {
+    '60-75': {
+      kcal: 2300, proteina: 150, carbo: 250, gordura: 75, hidratacao: 2800,
+      var1: {
+        nome: 'Recomposição — Padrão Animal',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['3 ovos inteiros mexidos na manteiga (180 kcal)', 'Batata-doce cozida 120g (105 kcal)', '1 banana + 1 laranja (110 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Pré-treino / Almoço (12h30)', alimentos: ['Frango grelhado 150g (250 kcal)', 'Mandioca ou inhame 130g (170 kcal)', 'Folhas verdes + tomate + azeite 1 colher', 'Fruta de época (60 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 2 unidades (140 kcal)', 'Queijo coalho 40g (120 kcal)', 'Castanha-do-pará 3 unidades (90 kcal)'] },
+          { nome: 'Jantar (20h)', alimentos: ['Peixe (salmão, tilápia) ou frango 180g (300 kcal)', 'Inhame ou batata-doce 130g (115 kcal)', 'Legumes refogados na manteiga + ervas'] },
+        ]
+      },
+      var2: {
+        nome: 'Recomposição — Variação Hambúrguer',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['3 ovos inteiros mexidos na manteiga (180 kcal)', 'Batata-doce cozida 120g (105 kcal)', '1 banana + 1 laranja (110 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Pré-treino / Almoço (12h30)', alimentos: ['Frango grelhado 150g (250 kcal)', 'Mandioca ou inhame 130g (170 kcal)', 'Folhas verdes + tomate + azeite 1 colher', 'Fruta de época (60 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 2 unidades (140 kcal)', 'Queijo coalho 40g (120 kcal)', 'Castanha-do-pará 3 unidades (90 kcal)'] },
+          { nome: 'Jantar (20h) — Hambúrguer Artesanal', alimentos: ['Hambúrguer de carne bovina 160g (patinho + alcatra) (370 kcal)', 'Ovo frito na manteiga 1 unidade (90 kcal)', 'Queijo prato 30g (90 kcal)', 'Batata-doce assada 100g (87 kcal)', 'Folhas + tomate + mostarda sem açúcar — sem pão industrial'] },
+        ]
+      }
+    },
+    '75-90': {
+      kcal: 2600, proteina: 170, carbo: 280, gordura: 85, hidratacao: 3200,
+      var1: {
+        nome: 'Recomposição — Padrão Animal',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['4 ovos inteiros mexidos na manteiga (240 kcal)', 'Batata-doce cozida 150g (130 kcal)', '1 banana + 1 laranja (110 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Almoço (12h30)', alimentos: ['Frango ou carne vermelha magra 180g (310 kcal)', 'Mandioca + mandioquinha 150g (195 kcal)', 'Folhas verdes + tomate + cenoura + azeite', 'Fruta de época (70 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 3 unidades (210 kcal)', 'Queijo minas padrão 40g (110 kcal)', 'Castanha-do-pará 3 unidades + nozes 2 unidades (130 kcal)'] },
+          { nome: 'Jantar (20h)', alimentos: ['Salmão ou frango 200g (330 kcal)', 'Inhame cozido 150g (130 kcal)', 'Legumes refogados na manteiga + azeite + ervas'] },
+        ]
+      },
+      var2: {
+        nome: 'Recomposição — Variação Hambúrguer',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['4 ovos inteiros mexidos na manteiga (240 kcal)', 'Batata-doce cozida 150g (130 kcal)', '1 banana + 1 laranja (110 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Almoço (12h30)', alimentos: ['Frango ou carne vermelha magra 180g (310 kcal)', 'Mandioca + mandioquinha 150g (195 kcal)', 'Folhas verdes + tomate + cenoura + azeite', 'Fruta de época (70 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 3 unidades (210 kcal)', 'Queijo minas padrão 40g (110 kcal)', 'Castanha-do-pará 3 unidades + nozes 2 unidades (130 kcal)'] },
+          { nome: 'Jantar (20h) — Hambúrguer Artesanal', alimentos: ['Hambúrguer de carne bovina 180g (420 kcal)', 'Ovo frito na manteiga 1 unidade (90 kcal)', 'Queijo prato 35g (105 kcal)', 'Batata-doce assada 120g (105 kcal)', 'Folhas + tomate + mostarda artesanal — sem pão industrial'] },
+        ]
+      }
+    },
+    '90+': {
+      kcal: 2900, proteina: 195, carbo: 315, gordura: 95, hidratacao: 3600,
+      var1: {
+        nome: 'Recomposição — Padrão Animal',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['5 ovos inteiros mexidos na manteiga (300 kcal)', 'Batata-doce cozida 180g (157 kcal)', '1 banana + 1 manga pequena (130 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Almoço (12h30)', alimentos: ['Frango ou carne vermelha 210g (360 kcal)', 'Mandioca + inhame 180g (235 kcal)', 'Folhas verdes + tomate + pepino + azeite', 'Fruta de época (80 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 3 unidades (210 kcal)', 'Queijo minas padrão 50g (140 kcal)', 'Mix castanha-do-pará + nozes + amêndoas 30g (200 kcal)'] },
+          { nome: 'Jantar (20h)', alimentos: ['Salmão ou carne vermelha 230g (375 kcal)', 'Inhame + mandioquinha 180g (155 kcal)', 'Legumes refogados na manteiga + azeite + ervas frescas'] },
+        ]
+      },
+      var2: {
+        nome: 'Recomposição — Variação Hambúrguer',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['5 ovos inteiros mexidos na manteiga (300 kcal)', 'Batata-doce cozida 180g (157 kcal)', '1 banana + 1 manga pequena (130 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Almoço (12h30)', alimentos: ['Frango ou carne vermelha 210g (360 kcal)', 'Mandioca + inhame 180g (235 kcal)', 'Folhas verdes + tomate + pepino + azeite', 'Fruta de época (80 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 3 unidades (210 kcal)', 'Queijo minas padrão 50g (140 kcal)', 'Mix castanha-do-pará + nozes + amêndoas 30g (200 kcal)'] },
+          { nome: 'Jantar (20h) — Hambúrguer Artesanal', alimentos: ['Hambúrguer de carne bovina 220g (510 kcal)', 'Ovo frito na manteiga 1 unidade (90 kcal)', 'Queijo prato 40g (120 kcal)', 'Batata-doce assada 150g (130 kcal)', 'Folhas + tomate + mostarda artesanal — sem pão industrial'] },
+        ]
+      }
+    }
+  },
+
+  // ════════════════════════════════════════════════════════
+  // HÍBRIDO — EMAGRECIMENTO + PERFORMANCE
+  // ════════════════════════════════════════════════════════
+  hibrido: {
+    '60-75': {
+      kcal: 2100, proteina: 155, carbo: 210, gordura: 72, hidratacao: 2800,
+      var1: {
+        nome: 'Híbrido Emagrecimento + Performance — Padrão Animal',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['3 ovos inteiros mexidos na manteiga (180 kcal)', 'Batata-doce cozida 100g (87 kcal)', '1 banana (90 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Pré-treino (60 min antes)', alimentos: ['Batata-doce ou mandioca 100g (130 kcal)', 'Ovos cozidos 2 unidades (140 kcal) ou frango 80g (135 kcal)'] },
+          { nome: 'Almoço / Pós-treino (12h30)', alimentos: ['Frango grelhado 160g (265 kcal)', 'Inhame ou mandioca 130g (170 kcal)', 'Folhas verdes + tomate + cenoura + azeite 1 colher', 'Fruta de época (60 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 2 unidades (140 kcal)', 'Castanha-do-pará 2 unidades + nozes 2 unidades (120 kcal)'] },
+          { nome: 'Jantar (20h)', alimentos: ['Peixe (tilápia, atum, salmão) 170g (280 kcal)', 'Legumes refogados na manteiga 220g (90 kcal)', 'Azeite 1 colher de sopa (90 kcal)'] },
+        ]
+      },
+      var2: {
+        nome: 'Híbrido Emagrecimento + Performance — Variação Hambúrguer',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['3 ovos inteiros mexidos na manteiga (180 kcal)', 'Batata-doce cozida 100g (87 kcal)', '1 banana (90 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Pré-treino (60 min antes)', alimentos: ['Batata-doce ou mandioca 100g (130 kcal)', 'Ovos cozidos 2 unidades (140 kcal) ou frango 80g (135 kcal)'] },
+          { nome: 'Almoço / Pós-treino (12h30)', alimentos: ['Frango grelhado 160g (265 kcal)', 'Inhame ou mandioca 130g (170 kcal)', 'Folhas verdes + tomate + cenoura + azeite 1 colher', 'Fruta de época (60 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 2 unidades (140 kcal)', 'Castanha-do-pará 2 unidades + nozes 2 unidades (120 kcal)'] },
+          { nome: 'Jantar (20h) — Hambúrguer Artesanal', alimentos: ['Hambúrguer de patinho 160g grelhado (320 kcal)', 'Ovo frito na manteiga 1 unidade (90 kcal)', 'Folhas + tomate + mostarda sem açúcar', 'Abobrinha grelhada ou brócolis como acompanhamento (40 kcal)', 'Sem batata frita — sem pão industrial'] },
+        ]
+      }
+    },
+    '75-90': {
+      kcal: 2350, proteina: 175, carbo: 235, gordura: 80, hidratacao: 3200,
+      var1: {
+        nome: 'Híbrido Emagrecimento + Performance — Padrão Animal',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['4 ovos inteiros mexidos na manteiga (240 kcal)', 'Batata-doce cozida 120g (105 kcal)', '1 banana + 1 kiwi (110 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Pré-treino (60 min antes)', alimentos: ['Batata-doce ou mandioca 120g (157 kcal)', 'Frango 100g (165 kcal)'] },
+          { nome: 'Almoço / Pós-treino (12h30)', alimentos: ['Frango ou carne magra 180g (310 kcal)', 'Mandioca + mandioquinha 140g (185 kcal)', 'Folhas verdes + tomate + azeite', 'Fruta de época (65 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 2 unidades (140 kcal)', 'Queijo coalho 30g (90 kcal)', 'Castanha-do-pará 3 unidades (90 kcal)'] },
+          { nome: 'Jantar (20h)', alimentos: ['Salmão ou peixe 190g (310 kcal)', 'Legumes refogados na manteiga 240g (100 kcal)', 'Azeite 1,5 colher de sopa (135 kcal)'] },
+        ]
+      },
+      var2: {
+        nome: 'Híbrido Emagrecimento + Performance — Variação Hambúrguer',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['4 ovos inteiros mexidos na manteiga (240 kcal)', 'Batata-doce cozida 120g (105 kcal)', '1 banana + 1 kiwi (110 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Pré-treino (60 min antes)', alimentos: ['Batata-doce ou mandioca 120g (157 kcal)', 'Frango 100g (165 kcal)'] },
+          { nome: 'Almoço / Pós-treino (12h30)', alimentos: ['Frango ou carne magra 180g (310 kcal)', 'Mandioca + mandioquinha 140g (185 kcal)', 'Folhas verdes + tomate + azeite', 'Fruta de época (65 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 2 unidades (140 kcal)', 'Queijo coalho 30g (90 kcal)', 'Castanha-do-pará 3 unidades (90 kcal)'] },
+          { nome: 'Jantar (20h) — Hambúrguer Artesanal', alimentos: ['Hambúrguer de patinho + alcatra 180g grelhado (360 kcal)', 'Ovo frito na manteiga 1 unidade (90 kcal)', 'Queijo prato 25g (75 kcal)', 'Folhas + tomate + mostarda sem açúcar', 'Brócolis ou couve-flor assada (50 kcal) — sem pão industrial'] },
+        ]
+      }
+    },
+    '90+': {
+      kcal: 2650, proteina: 200, carbo: 265, gordura: 90, hidratacao: 3600,
+      var1: {
+        nome: 'Híbrido Emagrecimento + Performance — Padrão Animal',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['5 ovos inteiros mexidos na manteiga (300 kcal)', 'Batata-doce cozida 150g (130 kcal)', '1 banana + 1 laranja (120 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Pré-treino (60 min antes)', alimentos: ['Batata-doce ou mandioca 150g (195 kcal)', 'Frango 120g (200 kcal)'] },
+          { nome: 'Almoço / Pós-treino (13h)', alimentos: ['Carne magra ou frango 200g (345 kcal)', 'Mandioca + inhame 160g (210 kcal)', 'Folhas verdes + tomate + cenoura + azeite', 'Fruta de época (75 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 3 unidades (210 kcal)', 'Queijo minas padrão 40g (110 kcal)', 'Mix castanha-do-pará + nozes 25g (165 kcal)'] },
+          { nome: 'Jantar (20h)', alimentos: ['Salmão ou carne vermelha magra 210g (345 kcal)', 'Legumes refogados na manteiga 260g (110 kcal)', 'Azeite 1,5 colher de sopa (135 kcal)'] },
+        ]
+      },
+      var2: {
+        nome: 'Híbrido Emagrecimento + Performance — Variação Hambúrguer',
+        refeicoes: [
+          { nome: 'Café da manhã (7h)', alimentos: ['5 ovos inteiros mexidos na manteiga (300 kcal)', 'Batata-doce cozida 150g (130 kcal)', '1 banana + 1 laranja (120 kcal)', 'Café preto sem açúcar'] },
+          { nome: 'Pré-treino (60 min antes)', alimentos: ['Batata-doce ou mandioca 150g (195 kcal)', 'Frango 120g (200 kcal)'] },
+          { nome: 'Almoço / Pós-treino (13h)', alimentos: ['Carne magra ou frango 200g (345 kcal)', 'Mandioca + inhame 160g (210 kcal)', 'Folhas verdes + tomate + cenoura + azeite', 'Fruta de época (75 kcal)'] },
+          { nome: 'Lanche (16h)', alimentos: ['Ovos cozidos 3 unidades (210 kcal)', 'Queijo minas padrão 40g (110 kcal)', 'Mix castanha-do-pará + nozes 25g (165 kcal)'] },
+          { nome: 'Jantar (20h) — Hambúrguer Artesanal', alimentos: ['Hambúrguer de patinho 200g grelhado (400 kcal)', 'Ovo frito na manteiga 1 unidade (90 kcal)', 'Queijo prato 30g (90 kcal)', 'Folhas + tomate + mostarda sem açúcar', 'Abobrinha grelhada ou brócolis (60 kcal) — sem pão industrial'] },
+        ]
+      }
+    }
+  }
+};
+
+// ── MAPEAR OBJETIVO DO ALUNO ──────────────────────────────
+function mapearCategorianutricao(objetivo) {
+  if (!objetivo) return 'recomposicao';
+  const o = objetivo.toLowerCase();
+  if (o.includes('hipertrofia') || o.includes('estética') || o.includes('estetica')) return 'hipertrofia';
+  if (o.includes('perda') || o.includes('gordura') || o.includes('emagrecer')) return 'emagrecimento';
+  if (o.includes('performance') || o.includes('corrida')) return 'hibrido';
+  if (o.includes('saúde') || o.includes('saude') || o.includes('qualidade')) return 'recomposicao';
+  return 'recomposicao';
+}
+
+// ── MAPEAR FAIXA DE PESO ──────────────────────────────────
+function mapearFaixaPeso(peso) {
+  const p = parseFloat(peso) || 75;
+  if (p < 75) return '60-75';
+  if (p < 90) return '75-90';
+  return '90+';
+}
+
+// ── OBTER TEMPLATE CORRETO ────────────────────────────────
+function getNutriTemplate(objetivo, peso) {
+  const cat = mapearCategorianutricao(objetivo);
+  const faixa = mapearFaixaPeso(peso);
+  return { ...NUTRI_TEMPLATES[cat][faixa], categoria: cat, faixa };
+}
+
+// ── RENDER DA ABA NUTRIÇÃO ────────────────────────────────
+let nutriVariacao = 1; // 1 ou 2
+
+function renderNomeCat(cat) {
+  const nomes = { hipertrofia: 'Hipertrofia', emagrecimento: 'Emagrecimento', recomposicao: 'Recomposição', hibrido: 'Hibrido — Emagrecimento + Performance' };
+  return nomes[cat] || cat;
+}
+
+function renderNutricao() {
+  const objetivo = S.anamnese ? S.anamnese.objetivo : '';
+  const peso = S.anamnese ? S.anamnese.peso : '75';
+  const t = getNutriTemplate(objetivo, peso);
+
+  // Macros
+  document.getElementById('nutri-kcal').textContent = t.kcal;
+  document.getElementById('nutri-prot').textContent = t.proteina + 'g';
+  document.getElementById('nutri-carbo').textContent = t.carbo + 'g';
+  document.getElementById('nutri-gordu').textContent = t.gordura + 'g';
+  document.getElementById('nutri-hidra').textContent = (t.hidratacao / 1000).toFixed(1) + 'L';
+  document.getElementById('nutri-cat-label').textContent = renderNomeCat(t.categoria) + ' · ' + t.faixa + 'kg';
+
+  renderVariacao(t);
+}
+
+function renderVariacao(t) {
+  const v = nutriVariacao === 1 ? t.var1 : t.var2;
+
+  // Botões toggle
+  document.getElementById('nutri-btn-v1').classList.toggle('active', nutriVariacao === 1);
+  document.getElementById('nutri-btn-v2').classList.toggle('active', nutriVariacao === 2);
+
+  // Nome da variação
+  document.getElementById('nutri-var-nome').textContent = v.nome;
+
+  // Refeições
+  const wrap = document.getElementById('nutri-refeicoes');
+  wrap.innerHTML = v.refeicoes.map(r => `
+    <div class="card" style="margin-bottom:12px">
+      <div class="acl ay"></div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;margin-bottom:10px">${r.nome}</div>
+      <ul style="list-style:none;display:grid;gap:6px">
+        ${r.alimentos.map(a => `
+          <li style="display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.5">
+            <span style="color:var(--accent);flex-shrink:0;margin-top:2px">▸</span>
+            <span>${a}</span>
+          </li>`).join('')}
+      </ul>
+    </div>`).join('');
+}
+
+function trocarVariacaoNutri(v) {
+  nutriVariacao = v;
+  const objetivo = S.anamnese ? S.anamnese.objetivo : '';
+  const peso = S.anamnese ? S.anamnese.peso : '75';
+  const t = getNutriTemplate(objetivo, peso);
+  renderVariacao(t);
+}
+
+
 document.addEventListener('DOMContentLoaded', verificarSessao);
 </script>
 </body>
