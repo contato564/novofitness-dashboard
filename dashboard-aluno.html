@@ -250,6 +250,57 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
 .aguardando-box{width:100%;max-width:440px;text-align:center;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px 32px}
 @keyframes loginIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .login-box,.aguardando-box{animation:loginIn .5s ease both}
+
+/* ── MOBILE ── */
+@media(max-width:480px){
+  .shell{padding:0 12px 100px}
+
+  /* Header compacto */
+  header{padding:16px 0 0;gap:6px}
+  .brand{font-size:20px;letter-spacing:2px}
+  .brand span{font-size:10px}
+  .aname{font-size:16px}
+  .stag{font-size:10px}
+
+  /* Nav scroll horizontal — uma linha */
+  .nav{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:0;margin-bottom:20px}
+  .nav::-webkit-scrollbar{display:none}
+  .nav-tab{flex-shrink:0;padding:12px 14px;font-size:9px}
+
+  /* Cards */
+  .card{padding:14px}
+  .cv{font-size:32px}
+
+  /* Tabela de treino — vira cards */
+  .ex-table thead{display:none}
+  .ex-table tbody tr{display:block;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px}
+  .ex-table tbody tr td{display:block;padding:4px 0;border:none;font-size:13px}
+  .ex-table tbody tr td:first-child{font-weight:600;color:var(--text);margin-bottom:6px;font-size:14px}
+  .ex-table tbody tr td::before{content:attr(data-label);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;display:block;margin-bottom:2px}
+  .ni{width:100%}
+  .serinp{width:100%}
+  .acwrap{width:100%}
+  .exinp{width:100%}
+
+  /* Tabs de dia de treino */
+  .tabs{gap:4px}
+  .tab{padding:7px 10px;font-size:9px}
+
+  /* Week grid */
+  .week-grid{grid-template-columns:repeat(4,1fr);gap:6px}
+  .wday{padding:10px 4px}
+  .wd-nome{font-size:8px}
+  .wd-icon{font-size:16px}
+
+  /* Grids */
+  .g2,.g3,.g4{grid-template-columns:1fr}
+
+  /* Modal */
+  .modal{padding:20px 16px}
+
+  /* Seção */
+  section{margin-bottom:24px}
+}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
