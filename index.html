@@ -30,17 +30,16 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .ob-err{color:var(--a2);font-size:12px;font-family:'JetBrains Mono',monospace;margin-top:8px;min-height:16px}
 
 /* ââ HEADER ââ */
-header{padding:20px 0 0;margin-bottom:0}
-.brand{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:var(--accent)}
-.brand span{color:var(--muted);font-size:10px;display:block;font-family:'DM Sans',sans-serif;letter-spacing:1px;font-weight:300;margin-top:1px}
-.hdr-r{display:none}
-.aname{display:none}
-.stag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;margin-top:2px}
+header{display:flex;align-items:center;justify-content:space-between;padding:28px 0 0;flex-wrap:wrap;gap:12px;margin-bottom:4px}
+.brand{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:3px;color:var(--accent)}
+.brand span{color:var(--muted);font-size:12px;display:block;font-family:'DM Sans',sans-serif;letter-spacing:1px;font-weight:300;margin-top:2px}
+.hdr-r{text-align:right}
+.aname{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px}
+.stag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px}
 
 /* ââ NAV ââ */
-.nav{display:flex;gap:0;margin-bottom:24px;border-bottom:1px solid var(--border);flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
-.nav::-webkit-scrollbar{display:none}
-.nav-tab{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;padding:11px 16px;border:none;background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;text-transform:uppercase;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;flex-shrink:0}
+.nav{display:flex;gap:0;margin-bottom:28px;border-bottom:1px solid var(--border);flex-wrap:wrap;overflow-x:auto}
+.nav-tab{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;padding:12px 18px;border:none;background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;text-transform:uppercase;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
 .nav-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
 .nav-tab:hover:not(.active){color:var(--text)}
 .page{display:none}.page.active{display:block}
@@ -49,17 +48,16 @@ header{padding:20px 0 0;margin-bottom:0}
 .sl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:14px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
-.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 @media(max-width:860px){.g4{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.g2,.g3{grid-template-columns:1fr}.g4{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.g2,.g3,.g4{grid-template-columns:1fr}}
 section{margin-bottom:36px}
 .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;position:relative;overflow:hidden;transition:border-color .2s;overflow-wrap:break-word;word-break:break-word}
 .card:hover{border-color:#33334a}
 .acl{position:absolute;top:0;left:0;right:0;height:2px}
 .ay{background:var(--accent)}.ab{background:var(--a3)}.ag{background:var(--green)}.ao{background:var(--orange)}.ar{background:var(--a2)}
 .ct{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:10px}
-.cv{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:1px;line-height:1}
-@media(max-width:600px){.cv{font-size:28px}}
+.cv{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:1px;line-height:1}
 .cs{font-size:12px;color:var(--muted);margin-top:4px}
 
 /* ââ LOADING BAR ââ */
@@ -623,8 +621,11 @@ select.inp:focus,input.inp:focus{outline:none;border-color:var(--a3)}
 <div class="shell">
 
 <header>
-  <div class="brand">O NOVO FITNESS<span>CONSULTORIA PREMIUM — DIEGO ROSSATO</span></div>
-  <div class="stag" id="hdr-semana" style="padding:2px 0 12px;display:block">—</div>
+  <div class="brand">NOVO FITNESS<span>CONSULTORIA PREMIUM â DIEGO ROSSATO</span></div>
+  <div class="hdr-r">
+    <div class="aname" id="hdr-nome">â</div>
+    <div class="stag" id="hdr-semana">â</div>
+  </div>
 </header>
 
 <!-- LOADING CONFIG -->
